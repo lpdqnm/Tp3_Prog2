@@ -9,6 +9,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     public static final int HAUTEUR = 510;
     public static final Font FONT_TITRE = new Font("Courier", Font.BOLD, 24);
     public static final Font FONT_BOUTON = new Font("Courier", Font.PLAIN, 20);
+    public static final Integer[] TAB_DIFFICULTE = new Integer[] {1,2,3};
 
     public static final String PENDU_ZERO_ERREUR = "   _____________   "
             + "\n     |        |    " + "\n     |        |    "
@@ -58,6 +59,11 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     private JPanel panneauOptions;
     private JLabel difficulte;
+    private JComboBox listeDifficulte;
+    private JLabel couleurInterface;
+    private JRadioButton interfaceClaire;
+    private JRadioButton interfaceSombre;
+    private ButtonGroup groupeCouleur;
 
     public JeuPendu() {
         initVue1();
@@ -102,19 +108,40 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         boutonStats.setVisible(false);
 
         panneauOptions = new JPanel(null);
-        panneauOptions.setBounds(12, 20,
-                fenetre.getWidth() - 40,
-                75);
-        panneauOptions.setBorder(BorderFactory.createEtchedBorder());
+        panneauOptions.setBounds(17, 20, fenetre.getWidth() - 50, 85);
+        panneauOptions.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panneauOptions.setBackground(Color.WHITE);
         panneauOptions.setVisible(true);
         
         difficulte = new JLabel("Niveau de difficulté");
-        difficulte.setBounds(panneauOptions.getX()+10, panneauOptions.getY()+15, panneauOptions.getWidth()/4, panneauOptions.getHeight()/4);
+        difficulte.setBounds(panneauOptions.getX(), panneauOptions.getY()+2, panneauOptions.getWidth()/4, 10);
         
+        listeDifficulte = new JComboBox (TAB_DIFFICULTE);
+        listeDifficulte.setBounds(difficulte.getX()+140, difficulte.getY()-8, difficulte.getWidth()/2, difficulte.getHeight()+10);
+        listeDifficulte.setBackground(Color.WHITE);
         
+        couleurInterface = new JLabel ("Couleur de l'interface");
+        couleurInterface.setBounds(difficulte.getX(), difficulte.getY()+30, difficulte.getWidth()+10 , difficulte.getHeight());
+        
+        interfaceClaire = new JRadioButton("Claire");
+        interfaceClaire.setSelected(true);
+        interfaceClaire.setBounds(listeDifficulte.getX(), listeDifficulte.getY()+30, 60, 30);
+        interfaceClaire.setBackground(Color.WHITE);
+        
+        interfaceSombre = new JRadioButton("Sombre");
+        interfaceSombre.setBounds(interfaceClaire.getX()+60, interfaceClaire.getY(), 75, 30);
+        interfaceSombre.setBackground(Color.WHITE);
+        
+        groupeCouleur = new ButtonGroup();
+        groupeCouleur.add(interfaceClaire);
+        groupeCouleur.add(interfaceSombre);
 
         fenetre.getContentPane().add(panneauOptions);
         panneauOptions.add(difficulte);
+        panneauOptions.add(listeDifficulte);
+        panneauOptions.add(couleurInterface);
+        panneauOptions.add(interfaceClaire);
+        panneauOptions.add(interfaceSombre);
 
     }
 
