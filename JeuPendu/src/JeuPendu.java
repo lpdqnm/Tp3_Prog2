@@ -245,6 +245,9 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         
         
         fenetreVue2.setVisible(true);
+        
+        boutonSoumettre.addActionListener(this);
+        boutonQuitter.addActionListener(this);
     }
     
     private void initVue3(){
@@ -319,12 +322,35 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelPartiesJoueesNiv2= new JLabel("Parties jouées : ");
         labelPartiesJoueesNiv2.setBounds(panneauStatsNiv2.getX(), panneauStatsNiv2.getX()-5, 130, 12);
         labelPartiesJoueesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesJoueesNiv2= new JTextField("0");
+        champPartiesJoueesNiv2.setBounds(labelPartiesJoueesNiv2.getX()+135, labelPartiesJoueesNiv2.getY()-2, 20, 15);
+        champPartiesJoueesNiv2.setBackground(Color.WHITE);
+        champPartiesJoueesNiv2.setEditable(false);
+        champPartiesJoueesNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesJoueesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
         labelPartiesGagneesNiv2= new JLabel("Parties gagnées : ");
         labelPartiesGagneesNiv2.setBounds(labelPartiesGagneesNiv2.getX()+15, labelPartiesGagneesNiv2.getY()+33, 130, 12);
         labelPartiesGagneesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesGagneesNiv2= new JTextField("-");
+        champPartiesGagneesNiv2.setBounds(labelPartiesGagneesNiv2.getX()+135, labelPartiesGagneesNiv2.getY()-2, 20, 15);
+        champPartiesGagneesNiv2.setBackground(Color.WHITE);
+        champPartiesGagneesNiv2.setEditable(false);
+        champPartiesGagneesNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesGagneesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
         labelScoreMoyenNiv2= new JLabel("Score Moyen : ");
         labelScoreMoyenNiv2.setBounds(labelPartiesGagneesNiv2.getX(), labelPartiesGagneesNiv2.getY()+22, 130, 12);
         labelScoreMoyenNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
+        champScoreMoyenNiv2= new JTextField("-");
+        champScoreMoyenNiv2.setBounds(labelScoreMoyenNiv2.getX()+135, labelScoreMoyenNiv2.getY()-2, 20, 15);
+        champScoreMoyenNiv2.setBackground(Color.WHITE);
+        champScoreMoyenNiv2.setEditable(false);
+        champScoreMoyenNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champScoreMoyenNiv2.setFont(FONT_LABELS_NIVEAUX);
         
         titreStatsNiv3 = new JLabel("Parties de niveau 3");
         titreStatsNiv3.setBounds(panneauStatsNiv2.getX(), panneauStatsNiv2.getY() +100, 135, 20);
@@ -339,12 +365,38 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelPartiesJoueesNiv3= new JLabel("Parties jouées : ");
         labelPartiesJoueesNiv3.setBounds(panneauStatsNiv3.getX(), panneauStatsNiv3.getX()-5, 130, 12);
         labelPartiesJoueesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesJoueesNiv3= new JTextField("0");
+        champPartiesJoueesNiv3.setBounds(labelPartiesJoueesNiv3.getX()+135, labelPartiesJoueesNiv3.getY()-2, 20, 15);
+        champPartiesJoueesNiv3.setBackground(Color.WHITE);
+        champPartiesJoueesNiv3.setEditable(false);
+        champPartiesJoueesNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesJoueesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
         labelPartiesGagneesNiv3= new JLabel("Parties gagnées : ");
         labelPartiesGagneesNiv3.setBounds(labelPartiesGagneesNiv3.getX()+15, labelPartiesGagneesNiv3.getY()+33, 130, 12);
         labelPartiesGagneesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesGagneesNiv3= new JTextField("-");
+        champPartiesGagneesNiv3.setBounds(labelPartiesGagneesNiv3.getX()+135, labelPartiesGagneesNiv3.getY()-2, 20, 15);
+        champPartiesGagneesNiv3.setBackground(Color.WHITE);
+        champPartiesGagneesNiv3.setEditable(false);
+        champPartiesGagneesNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesGagneesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
         labelScoreMoyenNiv3= new JLabel("Score Moyen : ");
         labelScoreMoyenNiv3.setBounds(labelPartiesGagneesNiv3.getX(), labelPartiesGagneesNiv3.getY()+22, 130, 12);
         labelScoreMoyenNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+        champScoreMoyenNiv3= new JTextField("-");
+        champScoreMoyenNiv3.setBounds(labelScoreMoyenNiv3.getX()+135, labelScoreMoyenNiv3.getY()-2, 20, 15);
+        champScoreMoyenNiv3.setBackground(Color.WHITE);
+        champScoreMoyenNiv3.setEditable(false);
+        champScoreMoyenNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champScoreMoyenNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+        boutonFermerStats = new JButton("Fermer");
+        boutonFermerStats.setBounds(panneauStatsNiv3.getX()+190, panneauStatsNiv3.getY()+95,75,20);
         
        
         
@@ -361,17 +413,25 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         fenetreVue3.getContentPane().add(titreStatsNiv2);
         fenetreVue3.getContentPane().add(panneauStatsNiv2);
         panneauStatsNiv2.add(labelPartiesJoueesNiv2);
+        panneauStatsNiv2.add(champPartiesJoueesNiv2);
         panneauStatsNiv2.add(labelPartiesGagneesNiv2);
+        panneauStatsNiv2.add(champPartiesGagneesNiv2);
         panneauStatsNiv2.add(labelScoreMoyenNiv2);
+        panneauStatsNiv2.add(champScoreMoyenNiv2);
         fenetreVue3.getContentPane().add(titreStatsNiv3);
         fenetreVue3.getContentPane().add(panneauStatsNiv3);
         panneauStatsNiv3.add(labelPartiesJoueesNiv3);
+        panneauStatsNiv3.add(champPartiesJoueesNiv3);
         panneauStatsNiv3.add(labelPartiesGagneesNiv3);
+        panneauStatsNiv3.add(champPartiesGagneesNiv3);
         panneauStatsNiv3.add(labelScoreMoyenNiv3);
-        
+        panneauStatsNiv3.add(champScoreMoyenNiv3);
+        fenetreVue3.add(boutonFermerStats);
         
         
         fenetreVue3.setVisible(true);
+        
+        boutonFermerStats.addActionListener(this);
     }
 
     @Override
@@ -381,7 +441,12 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             lettre.requestFocusInWindow();
         } else if (evenement.getSource() == boutonStats) {
             initVue3();
-
+        } else if(evenement.getSource() == boutonQuitter){
+            initVue1();
+        }else if(evenement.getSource() == boutonSoumettre){
+            
+        }else if(evenement.getSource() == boutonFermerStats){
+            initVue1();
         }
 
     }
