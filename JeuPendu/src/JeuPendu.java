@@ -10,46 +10,49 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     public static final Font FONT_TITRE = new Font("Courier", Font.BOLD, 24);
     public static final Font FONT_BOUTON = new Font("Courier", Font.PLAIN, 20);
     public static final Integer[] TAB_DIFFICULTE = new Integer[] {1,2,3};
+    public static final Font FONT_PENDU = new Font("Courier New", Font.PLAIN, 16);
+    public static final Font FONT_SAISIE_LETTRE = new Font("Courier New", Font.BOLD,24);
+    public static final String TRAIT = "___________________________________________________________________";
 
-    public static final String PENDU_ZERO_ERREUR = "   _____________   "
-            + "\n     |        |    " + "\n     |        |    "
-            + "\n     |             " + "\n     |             "
-            + "\n     |             " + "\n     |             "
-            + "\n   __|__________   " + "\n__|_____________|__";
+    public static final String PENDU_ZERO_ERREUR = "              ____________    "
+            + "\n               |        |     " + "\n               |        |     "
+            + "\n               |                  " + "\n               |                  "
+            + "\n               |                  " + "\n               |                  "
+            + "\n             __|__________   " + "\n          __|_____________|__";
 
-    public static final String PENDU_UNE_ERREUR = "   _____________   "
-            + "\n     |        |    " + "\n     |        |    "
-            + "\n     |        o     " + "\n     |             "
-            + "\n     |             " + "\n     |             "
-            + "\n   __|__________   " + "\n__|_____________|__";
+    public static final String PENDU_UNE_ERREUR = "              ____________    "
+            + "\n               |        |     " + "\n               |        |     "
+            + "\n               |        o         " + "\n               |                  "
+            + "\n               |                  " + "\n               |                  "
+            + "\n             __|__________   " + "\n          __|_____________|__";
 
-    public static final String PENDU_DEUX_ERREURS = "   _____________   "
-            + "\n     |        |    " + "\n     |        |    "
-            + "\n     |        o     " + "\n    |         |     "
-            + "\n     |             " + "\n     |             "
-            + "\n   __|__________   " + "\n__|_____________|__";
-    public static final String PENDU_TROIS_ERREURS = "   _____________   "
-            + "\n     |        |    " + "\n     |        |    "
-            + "\n     |        o     " + "\n     |       /|    "
-            + "\n     |             " + "\n     |             "
-            + "\n   __|__________   " + "\n__|_____________|__";
-    public static final String PENDU_QUATRE_ERREURS = "   _____________   "
-            + "\n     |        |    " + "\n     |        |    "
-            + "\n     |        o     " + "\n     |       /|\\   "
-            + "\n     |             " + "\n     |             "
-            + "\n   __|__________   " + "\n__|_____________|__";
-    public static final String PENDU_CINQ_ERREURS = "   _____________   "
-            + "\n     |        |    " + "\n     |        |    "
-            + "\n     |        o     " + "\n     |       /|\\   "
-            + "\n     |       /     " + "\n     |             "
-            + "\n   __|__________   " + "\n__|_____________|__";
-    public static final String PENDU_SIX_ERREURS = "   _____________   "
-            + "\n     |        |    " + "\n     |        |    "
-            + "\n     |        o     " + "\n     |       /|\\   "
-            + "\n     |       / \\     " + "\n     |             "
-            + "\n   __|__________   " + "\n__|_____________|__";
+    public static final String PENDU_DEUX_ERREURS = "              ____________    "
+            + "\n               |        |     " + "\n               |        |     "
+            + "\n               |        o         " + "\n               |        |         "
+            + "\n               |                  " + "\n               |                  "
+            + "\n             __|__________   " + "\n          __|_____________|__";
+    public static final String PENDU_TROIS_ERREURS = "              ____________    "
+            + "\n               |        |     " + "\n               |        |     "
+            + "\n               |        o         " + "\n               |       /|         "
+            + "\n               |                  " + "\n               |                  "
+            + "\n             __|__________   " + "\n          __|_____________|__";
+    public static final String PENDU_QUATRE_ERREURS = "              ____________    "
+            + "\n               |        |     " + "\n               |        |     "
+            + "\n               |        o         " + "\n               |       /|\\        "
+            + "\n               |                  " + "\n               |                  "
+            + "\n             __|__________   " + "\n          __|_____________|__";
+    public static final String PENDU_CINQ_ERREURS = "              ____________    "
+            + "\n               |        |     " + "\n               |        |     "
+            + "\n               |        o         " + "\n               |       /|\\        "
+            + "\n               |       /          " + "\n               |                  "
+            + "\n             __|__________   " + "\n          __|_____________|__";
+    public static final String PENDU_SIX_ERREURS = "              ____________    "
+            + "\n               |        |     " + "\n               |        |     "
+            + "\n               |        o         " + "\n               |       /|\\        "
+            + "\n               |       /\\         " + "\n               |                  "
+            + "\n             __|__________   " + "\n          __|_____________|__";
 
-    private int nbEssais = 0; // le nb d'essais effectuée, on pourra se servir de cette variable pour faire les affichage du pendu.
+    private int score = 6; // le nb d'essais effectuée, on pourra se servir de cette variable pour faire les affichage du pendu.
 
     //Vue 1:
     private JFrame fenetre;
@@ -57,6 +60,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JButton boutonJouer;
     private JButton boutonStats;
 
+    
+    private JFrame fenetreVue2;
     private JPanel panneauOptions;
     private JLabel difficulte;
     private JComboBox listeDifficulte;
@@ -64,16 +69,29 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JRadioButton interfaceClaire;
     private JRadioButton interfaceSombre;
     private ButtonGroup groupeCouleur;
+    private JTextArea pendu;
+    private JLabel affichageScore;
+    private JTextField ligneSeparation;
+    
+    private JLabel labelMotCache;
+    private JTextField motCache; // ici il faudra dynamiser les _ _ _ _  pour que ceux-ci soient au bon nombre et change au fur et à mesure en focntion de ce qui se trouve dans le mot.txt.
+    private JLabel labelLettre;
+    private JTextField lettre;
+    private JButton boutonSoumettre;
+    private JButton boutonQuitter;
+    
+    
+    
 
     public JeuPendu() {
         initVue1();
     }
 
     private void initVue1() {
-        fenetre = new JFrame("JEU DU PENDU");
+       fenetre = new JFrame("JEU DU PENDU");
         fenetre.setBounds(700, 250, LARGEUR, HAUTEUR);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.setResizable(true);
+        fenetre.setResizable(false);
         fenetre.setLayout(null);
         fenetre.getContentPane().setBackground(java.awt.Color.WHITE);
 
@@ -103,9 +121,15 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
 
     private void initVue2() {
-        titre.setVisible(false);
-        boutonJouer.setVisible(false);
-        boutonStats.setVisible(false);
+        fenetre.setVisible(false);
+        
+        fenetreVue2 = new JFrame("JEU DU PENDU");
+        fenetreVue2.setBounds(700, 250, LARGEUR, HAUTEUR);
+        fenetreVue2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetreVue2.setResizable(false);
+        fenetreVue2.setLayout(null);
+        fenetreVue2.getContentPane().setBackground(java.awt.Color.WHITE);
+        
 
         panneauOptions = new JPanel(null);
         panneauOptions.setBounds(17, 20, fenetre.getWidth() - 50, 85);
@@ -135,13 +159,61 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         groupeCouleur = new ButtonGroup();
         groupeCouleur.add(interfaceClaire);
         groupeCouleur.add(interfaceSombre);
+        
+        pendu = new JTextArea(PENDU_ZERO_ERREUR);
+        pendu.setBounds(panneauOptions.getX(), panneauOptions.getY()+85, panneauOptions.getWidth(), 175);
+        pendu.setFont(FONT_PENDU);
+        pendu.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        pendu.setEditable(false);
+        
+        affichageScore = new JLabel("SCORE:  " + score);
+        affichageScore.setBounds(pendu.getX() + 175, pendu.getY() +180, 75, 15);
+        
+        ligneSeparation = new JTextField(TRAIT);
+        ligneSeparation.setBounds(pendu.getX(), affichageScore.getY() + 25, pendu.getWidth(), affichageScore.getHeight()+10);
+        ligneSeparation.setBackground(Color.WHITE);
+        ligneSeparation.setEditable(false);
+        ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        
+        labelMotCache = new JLabel("MOT CACHÉ");
+        labelMotCache.setBounds(ligneSeparation.getX(), ligneSeparation.getY()+40, affichageScore.getWidth(), affichageScore.getHeight());
+        
+        motCache = new JTextField ("");
+        motCache.setBounds(labelMotCache.getX()+110, labelMotCache.getY()-10, 300, labelMotCache.getHeight()+20);
+        motCache.setEditable(false);
+        
+        labelLettre = new JLabel ("LETTRE");
+        labelLettre.setBounds(labelMotCache.getX(), labelMotCache.getY()+50, 60, motCache.getHeight());
+        
+        lettre = new JTextField();
+        lettre.setBounds(labelLettre.getX()+70, labelLettre.getY(), 40, motCache.getHeight());
+        lettre.setFont(FONT_SAISIE_LETTRE);
+        
+        boutonSoumettre = new JButton ("Soumettre");
+        boutonSoumettre.setBounds(lettre.getX()+60, lettre.getY()+8, 95, motCache.getHeight()-10);
+        
+        boutonQuitter = new JButton ("Quitter");
+        boutonQuitter.setBounds(lettre.getX()+300, lettre.getY()+8, 75, motCache.getHeight()-10);
 
-        fenetre.getContentPane().add(panneauOptions);
+        fenetreVue2.getContentPane().add(panneauOptions);
         panneauOptions.add(difficulte);
         panneauOptions.add(listeDifficulte);
         panneauOptions.add(couleurInterface);
         panneauOptions.add(interfaceClaire);
         panneauOptions.add(interfaceSombre);
+        fenetreVue2.getContentPane().add(pendu);
+        fenetreVue2.getContentPane().add(affichageScore);
+        fenetreVue2.getContentPane().add(ligneSeparation);
+        fenetreVue2.getContentPane().add(labelMotCache);
+        fenetreVue2.getContentPane().add(motCache);
+        fenetreVue2.getContentPane().add(labelLettre);
+        fenetreVue2.getContentPane().add(lettre);
+        fenetreVue2.getContentPane().add(boutonSoumettre);
+        fenetreVue2.getContentPane().add(boutonQuitter);
+        
+        fenetreVue2.setVisible(true);
+        
+    
 
     }
 
