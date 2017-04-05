@@ -11,7 +11,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     public static final Font FONT_BOUTON = new Font("Courier", Font.PLAIN, 20);
     public static final Integer[] TAB_DIFFICULTE = new Integer[] {1,2,3};
     public static final Font FONT_PENDU = new Font("Courier New", Font.PLAIN, 16);
+    public static final Font FONT_TITRES_NIVEAUX = new Font("Arial", Font.BOLD,13);
+    public static final Font FONT_LABELS_NIVEAUX = new Font("Courier New", Font.PLAIN,12);
     public static final Font FONT_SAISIE_LETTRE = new Font("Courier New", Font.BOLD,24);
+    
     public static final String TRAIT = "___________________________________________________________________";
 
     public static final String PENDU_ZERO_ERREUR = "              ____________    "
@@ -72,13 +75,41 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JTextArea pendu;
     private JLabel affichageScore;
     private JTextField ligneSeparation;
-    
     private JLabel labelMotCache;
     private JTextField motCache; // ici il faudra dynamiser les _ _ _ _  pour que ceux-ci soient au bon nombre et change au fur et à mesure en focntion de ce qui se trouve dans le mot.txt.
     private JLabel labelLettre;
     private JTextField lettre;
     private JButton boutonSoumettre;
     private JButton boutonQuitter;
+    
+    
+    private JFrame fenetreVue3;
+    private JLabel titreStats;
+    private JLabel titreStatsNiv1;
+    private JPanel panneauStatsNiv1;
+    private JLabel labelPartiesJoueesNiv1;
+    private JLabel labelPartiesGagneesNiv1;
+    private JLabel labelScoreMoyenNiv1;
+    private JLabel titreStatsNiv2;
+    private JPanel panneauStatsNiv2;
+    private JLabel labelPartiesJoueesNiv2;
+    private JLabel labelPartiesGagneesNiv2;
+    private JLabel labelScoreMoyenNiv2;
+    private JLabel titreStatsNiv3;
+    private JPanel panneauStatsNiv3;
+    private JLabel labelPartiesJoueesNiv3;
+    private JLabel labelPartiesGagneesNiv3;
+    private JLabel labelScoreMoyenNiv3;
+    private JTextField champPartiesJoueesNiv1;
+    private JTextField champPartiesGagneesNiv1;
+    private JTextField champScoreMoyenNiv1;
+    private JTextField champPartiesJoueesNiv2;
+    private JTextField champPartiesGagneesNiv2;
+    private JTextField champScoreMoyenNiv2;
+    private JTextField champPartiesJoueesNiv3;
+    private JTextField champPartiesGagneesNiv3;
+    private JTextField champScoreMoyenNiv3;
+    private JButton boutonFermerStats;
     
     
     
@@ -189,6 +220,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         lettre.setBounds(labelLettre.getX()+70, labelLettre.getY(), 40, motCache.getHeight());
         lettre.setFont(FONT_SAISIE_LETTRE);
         
+        
         boutonSoumettre = new JButton ("Soumettre");
         boutonSoumettre.setBounds(lettre.getX()+60, lettre.getY()+8, 95, motCache.getHeight()-10);
         
@@ -211,17 +243,144 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         fenetreVue2.getContentPane().add(boutonSoumettre);
         fenetreVue2.getContentPane().add(boutonQuitter);
         
-        fenetreVue2.setVisible(true);
         
+        fenetreVue2.setVisible(true);
+    }
     
-
+    private void initVue3(){
+        fenetre.setVisible(false);
+        
+        fenetreVue3 = new JFrame("JEU DU PENDU");
+        fenetreVue3.setBounds(700, 250, LARGEUR, HAUTEUR);
+        fenetreVue3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetreVue3.setResizable(false);
+        fenetreVue3.setLayout(null);
+        fenetreVue3.getContentPane().setBackground(java.awt.Color.WHITE);
+        
+        titreStats = new JLabel("STATISTIQUES");
+        titreStats.setBounds(0, -15, LARGEUR, HAUTEUR /5 );
+        titreStats.setHorizontalAlignment(SwingConstants.CENTER);
+        titreStats.setFont(FONT_TITRE);
+        
+        titreStatsNiv1 = new JLabel("Parties de niveau 1");
+        titreStatsNiv1.setBounds(titreStats.getX() +15, titreStats.getY() +100, 135, 20);
+        titreStatsNiv1.setFont(FONT_TITRES_NIVEAUX);
+        
+        panneauStatsNiv1 = new JPanel(null);
+        panneauStatsNiv1.setBounds(titreStatsNiv1.getX(), titreStatsNiv1.getY()+17, fenetreVue3.getWidth()-50, 80);
+        panneauStatsNiv1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panneauStatsNiv1.setBackground(Color.WHITE);
+        panneauStatsNiv1.setVisible(true);
+        
+        labelPartiesJoueesNiv1= new JLabel("Parties jouées : ");
+        labelPartiesJoueesNiv1.setBounds(panneauStatsNiv1.getX(), panneauStatsNiv1.getX()-5, 130, 12);
+        labelPartiesJoueesNiv1.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesJoueesNiv1= new JTextField("0");
+        champPartiesJoueesNiv1.setBounds(labelPartiesJoueesNiv1.getX()+135, labelPartiesJoueesNiv1.getY()-2, 20, 15);
+        champPartiesJoueesNiv1.setBackground(Color.WHITE);
+        champPartiesJoueesNiv1.setEditable(false);
+        champPartiesJoueesNiv1.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesJoueesNiv1.setFont(FONT_LABELS_NIVEAUX);
+        
+        
+        labelPartiesGagneesNiv1= new JLabel("Parties gagnées : ");
+        labelPartiesGagneesNiv1.setBounds(labelPartiesGagneesNiv1.getX()+15, labelPartiesGagneesNiv1.getY()+33, 130, 12);
+        labelPartiesGagneesNiv1.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesGagneesNiv1= new JTextField("-");
+        champPartiesGagneesNiv1.setBounds(labelPartiesGagneesNiv1.getX()+135, labelPartiesGagneesNiv1.getY()-2, 20, 15);
+        champPartiesGagneesNiv1.setBackground(Color.WHITE);
+        champPartiesGagneesNiv1.setEditable(false);
+        champPartiesGagneesNiv1.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesGagneesNiv1.setFont(FONT_LABELS_NIVEAUX);
+        
+        labelScoreMoyenNiv1= new JLabel("Score Moyen : ");
+        labelScoreMoyenNiv1.setBounds(labelPartiesGagneesNiv1.getX(), labelPartiesGagneesNiv1.getY()+22, 130, 12);
+        labelScoreMoyenNiv1.setFont(FONT_LABELS_NIVEAUX);
+        
+        champScoreMoyenNiv1= new JTextField("-");
+        champScoreMoyenNiv1.setBounds(labelScoreMoyenNiv1.getX()+135, labelScoreMoyenNiv1.getY()-2, 20, 15);
+        champScoreMoyenNiv1.setBackground(Color.WHITE);
+        champScoreMoyenNiv1.setEditable(false);
+        champScoreMoyenNiv1.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champScoreMoyenNiv1.setFont(FONT_LABELS_NIVEAUX);
+        
+        titreStatsNiv2 = new JLabel("Parties de niveau 2");
+        titreStatsNiv2.setBounds(panneauStatsNiv1.getX(), panneauStatsNiv1.getY() +100, 135, 20);
+        titreStatsNiv2.setFont(FONT_TITRES_NIVEAUX);
+        
+        panneauStatsNiv2 = new JPanel(null);
+        panneauStatsNiv2.setBounds(panneauStatsNiv1.getX(), titreStatsNiv2.getY()+17, fenetreVue3.getWidth()-50, 80);
+        panneauStatsNiv2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panneauStatsNiv2.setBackground(Color.WHITE);
+        panneauStatsNiv2.setVisible(true);
+        
+        labelPartiesJoueesNiv2= new JLabel("Parties jouées : ");
+        labelPartiesJoueesNiv2.setBounds(panneauStatsNiv2.getX(), panneauStatsNiv2.getX()-5, 130, 12);
+        labelPartiesJoueesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        labelPartiesGagneesNiv2= new JLabel("Parties gagnées : ");
+        labelPartiesGagneesNiv2.setBounds(labelPartiesGagneesNiv2.getX()+15, labelPartiesGagneesNiv2.getY()+33, 130, 12);
+        labelPartiesGagneesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        labelScoreMoyenNiv2= new JLabel("Score Moyen : ");
+        labelScoreMoyenNiv2.setBounds(labelPartiesGagneesNiv2.getX(), labelPartiesGagneesNiv2.getY()+22, 130, 12);
+        labelScoreMoyenNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
+        titreStatsNiv3 = new JLabel("Parties de niveau 3");
+        titreStatsNiv3.setBounds(panneauStatsNiv2.getX(), panneauStatsNiv2.getY() +100, 135, 20);
+        titreStatsNiv3.setFont(FONT_TITRES_NIVEAUX);
+        
+        panneauStatsNiv3 = new JPanel(null);
+        panneauStatsNiv3.setBounds(panneauStatsNiv2.getX(), titreStatsNiv3.getY()+17, fenetreVue3.getWidth()-50, 80);
+        panneauStatsNiv3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panneauStatsNiv3.setBackground(Color.WHITE);
+        panneauStatsNiv3.setVisible(true);
+        
+        labelPartiesJoueesNiv3= new JLabel("Parties jouées : ");
+        labelPartiesJoueesNiv3.setBounds(panneauStatsNiv3.getX(), panneauStatsNiv3.getX()-5, 130, 12);
+        labelPartiesJoueesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        labelPartiesGagneesNiv3= new JLabel("Parties gagnées : ");
+        labelPartiesGagneesNiv3.setBounds(labelPartiesGagneesNiv3.getX()+15, labelPartiesGagneesNiv3.getY()+33, 130, 12);
+        labelPartiesGagneesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        labelScoreMoyenNiv3= new JLabel("Score Moyen : ");
+        labelScoreMoyenNiv3.setBounds(labelPartiesGagneesNiv3.getX(), labelPartiesGagneesNiv3.getY()+22, 130, 12);
+        labelScoreMoyenNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+       
+        
+        
+        fenetreVue3.getContentPane().add(titreStats);
+        fenetreVue3.getContentPane().add(titreStatsNiv1);
+        fenetreVue3.getContentPane().add(panneauStatsNiv1);
+        panneauStatsNiv1.add(labelPartiesJoueesNiv1);
+        panneauStatsNiv1.add(champPartiesJoueesNiv1);
+        panneauStatsNiv1.add(labelPartiesGagneesNiv1);
+        panneauStatsNiv1.add(champPartiesGagneesNiv1);
+        panneauStatsNiv1.add(labelScoreMoyenNiv1);
+        panneauStatsNiv1.add(champScoreMoyenNiv1);
+        fenetreVue3.getContentPane().add(titreStatsNiv2);
+        fenetreVue3.getContentPane().add(panneauStatsNiv2);
+        panneauStatsNiv2.add(labelPartiesJoueesNiv2);
+        panneauStatsNiv2.add(labelPartiesGagneesNiv2);
+        panneauStatsNiv2.add(labelScoreMoyenNiv2);
+        fenetreVue3.getContentPane().add(titreStatsNiv3);
+        fenetreVue3.getContentPane().add(panneauStatsNiv3);
+        panneauStatsNiv3.add(labelPartiesJoueesNiv3);
+        panneauStatsNiv3.add(labelPartiesGagneesNiv3);
+        panneauStatsNiv3.add(labelScoreMoyenNiv3);
+        
+        
+        
+        fenetreVue3.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent evenement) {
         if (evenement.getSource() == boutonJouer) {
             initVue2();
+            lettre.requestFocusInWindow();
         } else if (evenement.getSource() == boutonStats) {
+            initVue3();
 
         }
 
