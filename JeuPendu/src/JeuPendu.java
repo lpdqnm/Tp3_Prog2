@@ -119,7 +119,14 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
 
     private void initVue1() {
-       fenetre = new JFrame("JEU DU PENDU");
+        if(fenetreVue2 != null){
+        fenetreVue2.setVisible(false);
+        }
+        if(fenetreVue3 != null){
+        fenetreVue3.setVisible(false);
+        }
+        
+        fenetre = new JFrame("JEU DU PENDU");
         fenetre.setBounds(700, 250, LARGEUR, HAUTEUR);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetre.setResizable(false);
@@ -152,7 +159,12 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
 
     private void initVue2() {
+        if(fenetre != null){
         fenetre.setVisible(false);
+        }
+        if(fenetreVue3 != null){
+        fenetreVue3.setVisible(false);
+        }
         
         fenetreVue2 = new JFrame("JEU DU PENDU");
         fenetreVue2.setBounds(700, 250, LARGEUR, HAUTEUR);
@@ -246,12 +258,19 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         
         fenetreVue2.setVisible(true);
         
+        interfaceClaire.addActionListener(this);
+        interfaceSombre.addActionListener(this);
         boutonSoumettre.addActionListener(this);
         boutonQuitter.addActionListener(this);
     }
     
     private void initVue3(){
+        if(fenetre != null){
         fenetre.setVisible(false);
+        }
+        if(fenetreVue2 != null){
+        fenetreVue2.setVisible(false);
+        }
         
         fenetreVue3 = new JFrame("JEU DU PENDU");
         fenetreVue3.setBounds(700, 250, LARGEUR, HAUTEUR);
@@ -447,8 +466,78 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             
         }else if(evenement.getSource() == boutonFermerStats){
             initVue1();
+        }else if(evenement.getSource() == interfaceClaire){
+            initVue2Claire();
+        }else if(evenement.getSource() == interfaceSombre){
+            initVue2Sombre();
         }
 
+    }
+    
+    private void initVue2Claire() {
+     fenetreVue2.getContentPane().setBackground(Color.WHITE);
+     difficulte.setBackground(Color.WHITE);
+     listeDifficulte.setBackground(Color.WHITE);
+     couleurInterface.setBackground(Color.WHITE);
+     interfaceClaire.setBackground(Color.WHITE);
+     interfaceSombre.setBackground(Color.WHITE);
+     pendu.setBackground(Color.WHITE);
+     affichageScore.setBackground(Color.WHITE);
+     ligneSeparation.setBackground(Color.WHITE);
+     labelMotCache.setBackground(Color.WHITE);
+     motCache.setBackground(Color.WHITE);
+     labelLettre.setBackground(Color.WHITE);
+     panneauOptions.setBackground(Color.WHITE);
+        
+     fenetreVue2.getContentPane().setForeground(Color.BLACK);
+     difficulte.setForeground(Color.BLACK);
+     listeDifficulte.setForeground(Color.BLACK);
+     couleurInterface.setForeground(Color.BLACK);
+     interfaceClaire.setForeground(Color.BLACK);
+     interfaceSombre.setForeground(Color.BLACK);
+     pendu.setForeground(Color.BLACK);
+     affichageScore.setForeground(Color.BLACK);
+     ligneSeparation.setForeground(Color.BLACK);
+     ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+     labelMotCache.setForeground(Color.BLACK);
+     motCache.setForeground(Color.BLACK);
+     labelLettre.setForeground(Color.BLACK);
+     panneauOptions.setForeground(Color.BLACK);
+     panneauOptions.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+    }
+
+    private void initVue2Sombre() {
+     
+     fenetreVue2.getContentPane().setBackground(Color.BLACK);
+     difficulte.setBackground(Color.BLACK);
+     listeDifficulte.setBackground(Color.BLACK);
+     couleurInterface.setBackground(Color.BLACK);
+     interfaceClaire.setBackground(Color.BLACK);
+     interfaceSombre.setBackground(Color.BLACK);
+     pendu.setBackground(Color.BLACK);
+     affichageScore.setBackground(Color.BLACK);
+     ligneSeparation.setBackground(Color.BLACK);
+     labelMotCache.setBackground(Color.BLACK);
+     motCache.setBackground(Color.BLACK);
+     labelLettre.setBackground(Color.BLACK);
+     panneauOptions.setBackground(Color.BLACK);
+        
+     fenetreVue2.getContentPane().setForeground(Color.WHITE);
+     difficulte.setForeground(Color.WHITE);
+     listeDifficulte.setForeground(Color.WHITE);
+     couleurInterface.setForeground(Color.WHITE);
+     interfaceClaire.setForeground(Color.WHITE);
+     interfaceSombre.setForeground(Color.WHITE);
+     pendu.setForeground(Color.WHITE);
+     affichageScore.setForeground(Color.WHITE);
+     ligneSeparation.setForeground(Color.WHITE);
+     ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+     labelMotCache.setForeground(Color.WHITE);
+     motCache.setForeground(Color.WHITE);
+     labelLettre.setForeground(Color.WHITE);
+     panneauOptions.setForeground(Color.WHITE);
+     panneauOptions.setBorder(BorderFactory.createLineBorder(Color.WHITE));
     }
 
     /**
