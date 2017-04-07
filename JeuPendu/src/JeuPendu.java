@@ -470,5 +470,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 //        System.out.println("\n"+PENDU_QUATRE_ERREURS);
 //        System.out.println("\n"+PENDU_CINQ_ERREURS);
 //        System.out.println("\n"+PENDU_SIX_ERREURS);
+        
+        ClasseProvisoire.ecrireLigneFichier("");//test
     }
 }

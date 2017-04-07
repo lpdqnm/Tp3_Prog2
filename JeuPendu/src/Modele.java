@@ -1,5 +1,5 @@
 
-package composantsGraphiquesEtLayout;
+//package composantsGraphiquesEtLayout;
 
 import javax.swing.JFrame;
 
