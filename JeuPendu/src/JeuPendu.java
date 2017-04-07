@@ -64,7 +64,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JButton boutonStats;
 
     
-    private JFrame fenetreVue2;
+    private JPanel panelVue2;
     private JPanel panneauOptions;
     private JLabel difficulte;
     private JComboBox listeDifficulte;
@@ -83,7 +83,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JButton boutonQuitter;
     
     
-    private JFrame fenetreVue3;
+    private JPanel fenetreVue3;
     private JLabel titreStats;
     private JLabel titreStatsNiv1;
     private JPanel panneauStatsNiv1;
@@ -119,8 +119,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
 
     private void initVue1() {
-        if(fenetreVue2 != null){
-        fenetreVue2.setVisible(false);
+        if(panelVue2 != null){
+        panelVue2.setVisible(false);
         }
         if(fenetreVue3 != null){
         fenetreVue3.setVisible(false);
@@ -158,20 +158,16 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         boutonStats.addActionListener(this);
     }
 
-    private void initVue2() {
-        if(fenetre != null){
-        fenetre.setVisible(false);
-        }
-        if(fenetreVue3 != null){
-        fenetreVue3.setVisible(false);
-        }
+   private void initVue2() {
+       
+        cacherMenuPrincipal();
         
-        fenetreVue2 = new JFrame("JEU DU PENDU");
-        fenetreVue2.setBounds(700, 250, LARGEUR, HAUTEUR);
-        fenetreVue2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetreVue2.setResizable(false);
-        fenetreVue2.setLayout(null);
-        fenetreVue2.getContentPane().setBackground(java.awt.Color.WHITE);
+        
+        panelVue2 = new JPanel(null);
+        panelVue2.setBounds(0, 0, LARGEUR, HAUTEUR);
+        panelVue2.setBackground(java.awt.Color.WHITE);
+       
+       
         
 
         panneauOptions = new JPanel(null);
@@ -239,45 +235,48 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         boutonQuitter = new JButton ("Quitter");
         boutonQuitter.setBounds(lettre.getX()+300, lettre.getY()+8, 75, motCache.getHeight()-10);
 
-        fenetreVue2.getContentPane().add(panneauOptions);
+        panelVue2.add(panneauOptions);
         panneauOptions.add(difficulte);
         panneauOptions.add(listeDifficulte);
         panneauOptions.add(couleurInterface);
         panneauOptions.add(interfaceClaire);
         panneauOptions.add(interfaceSombre);
-        fenetreVue2.getContentPane().add(pendu);
-        fenetreVue2.getContentPane().add(affichageScore);
-        fenetreVue2.getContentPane().add(ligneSeparation);
-        fenetreVue2.getContentPane().add(labelMotCache);
-        fenetreVue2.getContentPane().add(motCache);
-        fenetreVue2.getContentPane().add(labelLettre);
-        fenetreVue2.getContentPane().add(lettre);
-        fenetreVue2.getContentPane().add(boutonSoumettre);
-        fenetreVue2.getContentPane().add(boutonQuitter);
-        
-        
-        fenetreVue2.setVisible(true);
+        panelVue2.add(pendu);
+        panelVue2.add(affichageScore);
+        panelVue2.add(ligneSeparation);
+        panelVue2.add(labelMotCache);
+        panelVue2.add(motCache);
+        panelVue2.add(labelLettre);
+        panelVue2.add(lettre);
+        panelVue2.add(boutonSoumettre);
+        panelVue2.add(boutonQuitter);
+        fenetre.getContentPane().add(panelVue2);
+    
+        panelVue2.setVisible(true);
         
         interfaceClaire.addActionListener(this);
         interfaceSombre.addActionListener(this);
         boutonSoumettre.addActionListener(this);
         boutonQuitter.addActionListener(this);
+        lettre.addActionListener(this);
+        
+        initVue2Claire();
+        
+        
+    }
+
+    private void cacherMenuPrincipal() {
+        titre.setVisible(false);
+        boutonJouer.setVisible(false);
+        boutonStats.setVisible(false);
     }
     
     private void initVue3(){
-        if(fenetre != null){
-        fenetre.setVisible(false);
-        }
-        if(fenetreVue2 != null){
-        fenetreVue2.setVisible(false);
-        }
+        cacherMenuPrincipal();
         
-        fenetreVue3 = new JFrame("JEU DU PENDU");
-        fenetreVue3.setBounds(700, 250, LARGEUR, HAUTEUR);
-        fenetreVue3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetreVue3.setResizable(false);
-        fenetreVue3.setLayout(null);
-        fenetreVue3.getContentPane().setBackground(java.awt.Color.WHITE);
+        fenetreVue3 = new JPanel(null);
+        fenetreVue3.setBounds(0, 0, LARGEUR, HAUTEUR);
+        fenetreVue3.setBackground(java.awt.Color.WHITE);
         
         titreStats = new JLabel("STATISTIQUES");
         titreStats.setBounds(0, -15, LARGEUR, HAUTEUR /5 );
@@ -419,26 +418,26 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         
        
         
-        
-        fenetreVue3.getContentPane().add(titreStats);
-        fenetreVue3.getContentPane().add(titreStatsNiv1);
-        fenetreVue3.getContentPane().add(panneauStatsNiv1);
+        fenetre.getContentPane().add(fenetreVue3);
+        fenetreVue3.add(titreStats);
+        fenetreVue3.add(titreStatsNiv1);
+        fenetreVue3.add(panneauStatsNiv1);
         panneauStatsNiv1.add(labelPartiesJoueesNiv1);
         panneauStatsNiv1.add(champPartiesJoueesNiv1);
         panneauStatsNiv1.add(labelPartiesGagneesNiv1);
         panneauStatsNiv1.add(champPartiesGagneesNiv1);
         panneauStatsNiv1.add(labelScoreMoyenNiv1);
         panneauStatsNiv1.add(champScoreMoyenNiv1);
-        fenetreVue3.getContentPane().add(titreStatsNiv2);
-        fenetreVue3.getContentPane().add(panneauStatsNiv2);
+        fenetreVue3.add(titreStatsNiv2);
+        fenetreVue3.add(panneauStatsNiv2);
         panneauStatsNiv2.add(labelPartiesJoueesNiv2);
         panneauStatsNiv2.add(champPartiesJoueesNiv2);
         panneauStatsNiv2.add(labelPartiesGagneesNiv2);
         panneauStatsNiv2.add(champPartiesGagneesNiv2);
         panneauStatsNiv2.add(labelScoreMoyenNiv2);
         panneauStatsNiv2.add(champScoreMoyenNiv2);
-        fenetreVue3.getContentPane().add(titreStatsNiv3);
-        fenetreVue3.getContentPane().add(panneauStatsNiv3);
+        fenetreVue3.add(titreStatsNiv3);
+        fenetreVue3.add(panneauStatsNiv3);
         panneauStatsNiv3.add(labelPartiesJoueesNiv3);
         panneauStatsNiv3.add(champPartiesJoueesNiv3);
         panneauStatsNiv3.add(labelPartiesGagneesNiv3);
@@ -451,6 +450,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         fenetreVue3.setVisible(true);
         
         boutonFermerStats.addActionListener(this);
+        
+        initVue3Claire();
     }
 
     @Override
@@ -475,7 +476,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
     
     private void initVue2Claire() {
-     fenetreVue2.getContentPane().setBackground(Color.WHITE);
+     panelVue2.setBackground(Color.WHITE);
      difficulte.setBackground(Color.WHITE);
      listeDifficulte.setBackground(Color.WHITE);
      couleurInterface.setBackground(Color.WHITE);
@@ -489,7 +490,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      labelLettre.setBackground(Color.WHITE);
      panneauOptions.setBackground(Color.WHITE);
         
-     fenetreVue2.getContentPane().setForeground(Color.BLACK);
+     panelVue2.setForeground(Color.BLACK);
      difficulte.setForeground(Color.BLACK);
      listeDifficulte.setForeground(Color.BLACK);
      couleurInterface.setForeground(Color.BLACK);
@@ -509,7 +510,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     private void initVue2Sombre() {
      
-     fenetreVue2.getContentPane().setBackground(Color.BLACK);
+     panelVue2.setBackground(Color.BLACK);
      difficulte.setBackground(Color.BLACK);
      listeDifficulte.setBackground(Color.BLACK);
      couleurInterface.setBackground(Color.BLACK);
@@ -523,7 +524,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      labelLettre.setBackground(Color.BLACK);
      panneauOptions.setBackground(Color.BLACK);
         
-     fenetreVue2.getContentPane().setForeground(Color.WHITE);
+     panelVue2.setForeground(Color.WHITE);
      difficulte.setForeground(Color.WHITE);
      listeDifficulte.setForeground(Color.WHITE);
      couleurInterface.setForeground(Color.WHITE);
@@ -539,6 +540,36 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      panneauOptions.setForeground(Color.WHITE);
      panneauOptions.setBorder(BorderFactory.createLineBorder(Color.WHITE));
     }
+    
+    private void initVue3Claire(){
+        fenetreVue3.setBackground(Color.WHITE);
+titreStats.setBackground(Color.WHITE);
+titreStatsNiv1.setBackground(Color.WHITE);
+panneauStatsNiv1.setBackground(Color.WHITE);
+labelPartiesJoueesNiv1.setBackground(Color.WHITE);
+labelPartiesGagneesNiv1.setBackground(Color.WHITE);
+labelScoreMoyenNiv1.setBackground(Color.WHITE);
+titreStatsNiv2.setBackground(Color.WHITE);
+panneauStatsNiv2.setBackground(Color.WHITE);
+labelPartiesJoueesNiv2.setBackground(Color.WHITE);
+labelPartiesGagneesNiv2.setBackground(Color.WHITE);
+labelScoreMoyenNiv2.setBackground(Color.WHITE);
+titreStatsNiv3.setBackground(Color.WHITE);
+panneauStatsNiv3.setBackground(Color.WHITE);
+labelPartiesJoueesNiv3.setBackground(Color.WHITE);
+labelPartiesGagneesNiv3.setBackground(Color.WHITE);
+labelScoreMoyenNiv3.setBackground(Color.WHITE);
+champPartiesJoueesNiv1.setBackground(Color.WHITE);
+ champPartiesGagneesNiv1.setBackground(Color.WHITE);
+champScoreMoyenNiv1.setBackground(Color.WHITE);
+champPartiesJoueesNiv2.setBackground(Color.WHITE);
+champPartiesGagneesNiv2.setBackground(Color.WHITE);
+champScoreMoyenNiv2.setBackground(Color.WHITE);
+champPartiesJoueesNiv3.setBackground(Color.WHITE);
+champPartiesGagneesNiv3.setBackground(Color.WHITE);
+ champScoreMoyenNiv3.setBackground(Color.WHITE);
+boutonFermerStats.setBackground(Color.WHITE);
+    } 
 
     /**
      * Exécutée lorsque l'utilisateur ferme la fenetre.
