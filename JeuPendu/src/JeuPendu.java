@@ -5,6 +5,8 @@ import javax.swing.*;
 
 public class JeuPendu extends WindowAdapter implements ActionListener {
 
+    public static final String ALPHABET = 
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final int LARGEUR = 500;
     public static final int HAUTEUR = 510;
     public static final Font FONT_TITRE = new Font("Courier", Font.BOLD, 24);
@@ -456,6 +458,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent evenement) {
+        String scoreNul = "" + 0;
+        
         if (evenement.getSource() == boutonJouer) {
             initVue2();
             lettre.requestFocusInWindow();
@@ -463,7 +467,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             initVue3();
         } else if(evenement.getSource() == boutonQuitter){
             initVue1();
-        }else if(evenement.getSource() == boutonSoumettre){
             
         }else if(evenement.getSource() == boutonFermerStats){
             initVue1();
@@ -471,6 +474,12 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             initVue2Claire();
         }else if(evenement.getSource() == interfaceSombre){
             initVue2Sombre();
+        }else if (evenement.getSource() == boutonSoumettre || evenement.getSource() == lettre ){
+            if(lettre.getText().length()!= 1 || !ALPHABET.contains(lettre.getText())){
+                JOptionPane.showMessageDialog(panelVue2, "Vous devez entrer une lettre non accentuée!", "ERREUR", JOptionPane.WARNING_MESSAGE);
+            }
+        }else if(Integer.parseInt(affichageScore.getText()) == 0){
+            JOptionPane.showMessageDialog(panelVue2, "Bravo! Vous avez gagné la partie!", "PARTIE GAGNÉE", JOptionPane.PLAIN_MESSAGE);
         }
 
     }
