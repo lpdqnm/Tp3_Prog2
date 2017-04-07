@@ -550,7 +550,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
 
     public static void main(String[] params) {
-        new JeuPendu();
+//        new JeuPendu();
 
 //System.out.println("\n"+PENDU_ZERO_ERREUR);
 //        System.out.println("\n"+PENDU_UNE_ERREUR);
@@ -560,6 +560,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 //        System.out.println("\n"+PENDU_CINQ_ERREURS);
 //        System.out.println("\n"+PENDU_SIX_ERREURS);
         
-        ClasseProvisoire.ecrireLigneFichier("");//test
+        ClasseProvisoire.ecrireFichier();//test
     }
 }
