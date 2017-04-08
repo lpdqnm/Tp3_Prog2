@@ -15,12 +15,17 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     public static final Font FONT_TITRE = new Font("Courier", Font.BOLD, 24);
     public static final Font FONT_BOUTON = new Font("Courier", Font.PLAIN, 20);
     public static final Integer[] TAB_DIFFICULTE = new Integer[] {1,2,3};
-    public static final Font FONT_PENDU = new Font("Courier New", Font.PLAIN, 16);
-    public static final Font FONT_TITRES_NIVEAUX = new Font("Arial", Font.BOLD,13);
-    public static final Font FONT_LABELS_NIVEAUX = new Font("Courier New", Font.PLAIN,12);
-    public static final Font FONT_SAISIE_LETTRE = new Font("Courier New", Font.BOLD,24);
-    
-    public static final String TRAIT = "___________________________________________________________________";
+    public static final Font FONT_PENDU = new Font("Courier New", 
+            Font.PLAIN, 16);
+    public static final Font FONT_TITRES_NIVEAUX = new Font("Arial", 
+            Font.BOLD,13);
+    public static final Font FONT_LABELS_NIVEAUX = new Font("Courier New", 
+            Font.PLAIN,12);
+    public static final Font FONT_SAISIE_LETTRE = new Font("Courier New",
+            Font.BOLD,24);
+    public static final Font FONT_SCORE = new Font("Courier", Font.BOLD,12);
+    public static final String TRAIT = "_______________________________________"
+            +"____________________________";
 
     public static final String PENDU_ZERO_ERREUR = "              ____________    "
             + "\n               |        |     " + "\n               |        |     "
@@ -84,7 +89,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JRadioButton interfaceSombre;
     private ButtonGroup groupeCouleur;
     private JTextArea pendu;
-    private JLabel affichageScore;
+    private JLabel labelScore;
+    private JTextField affichageScore;
     private JTextField ligneSeparation;
     private JLabel labelMotCache;
     private JTextField motCache; // ici il faudra dynamiser les _ _ _ _  pour que ceux-ci soient au bon nombre et change au fur et à mesure en focntion de ce qui se trouve dans le mot.txt.
@@ -214,22 +220,28 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         groupeCouleur.add(interfaceSombre);
         
         pendu = new JTextArea(PENDU_ZERO_ERREUR);
-        pendu.setBounds(panneauOptions.getX(), panneauOptions.getY()+85, panneauOptions.getWidth(), 175);
+        pendu.setBounds(panneauOptions.getX(), panneauOptions.getY()+85, panneauOptions.getWidth(), 185);
         pendu.setFont(FONT_PENDU);
         pendu.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pendu.setEditable(false);
         
-        affichageScore = new JLabel("SCORE:  " + score);
-        affichageScore.setBounds(pendu.getX() + 175, pendu.getY() +180, 75, 15);
+        labelScore = new JLabel("SCORE:  ");
+        labelScore.setBounds(pendu.getX() + 175, pendu.getY()+190, 65, 15);
+        
+        affichageScore = new JTextField("" +score);
+        affichageScore.setBounds(labelScore.getX() + 50, labelScore.getY()-2, 17, 17);
+        affichageScore.setFont(labelScore.getFont());
+        affichageScore.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        
         
         ligneSeparation = new JTextField(TRAIT);
-        ligneSeparation.setBounds(pendu.getX(), affichageScore.getY() + 25, pendu.getWidth(), affichageScore.getHeight()+10);
+        ligneSeparation.setBounds(pendu.getX(), labelScore.getY() + 25, pendu.getWidth(), labelScore.getHeight()+10);
         ligneSeparation.setBackground(Color.WHITE);
         ligneSeparation.setEditable(false);
         ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         
         labelMotCache = new JLabel("MOT CACHÉ");
-        labelMotCache.setBounds(ligneSeparation.getX(), ligneSeparation.getY()+40, affichageScore.getWidth(), affichageScore.getHeight());
+        labelMotCache.setBounds(ligneSeparation.getX(), ligneSeparation.getY()+40, labelScore.getWidth()+10, labelScore.getHeight());
         
         motCache = new JTextField ("");
         motCache.setBounds(labelMotCache.getX()+110, labelMotCache.getY()-10, 300, labelMotCache.getHeight()+20);
@@ -256,6 +268,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         panneauOptions.add(interfaceClaire);
         panneauOptions.add(interfaceSombre);
         panelVue2.add(pendu);
+        panelVue2.add(labelScore);
         panelVue2.add(affichageScore);
         panelVue2.add(ligneSeparation);
         panelVue2.add(labelMotCache);
@@ -273,6 +286,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         boutonSoumettre.addActionListener(this);
         boutonQuitter.addActionListener(this);
         lettre.addActionListener(this);
+        
         
         initVue2Claire();
         
@@ -494,7 +508,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             } else {
                 resultatPartie(lettre.getText(), motTire);
             }
-        }else if(Integer.parseInt(affichageScore.getText()) == 0){
+        }else if(Integer.parseInt(labelScore.getText()) == 0){
             JOptionPane.showMessageDialog(panelVue2, "Bravo! Vous avez gagné la partie!", "PARTIE GAGNÉE", JOptionPane.PLAIN_MESSAGE);
         }
 
@@ -508,7 +522,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      interfaceClaire.setBackground(Color.WHITE);
      interfaceSombre.setBackground(Color.WHITE);
      pendu.setBackground(Color.WHITE);
-     affichageScore.setBackground(Color.WHITE);
+     labelScore.setBackground(Color.WHITE);
      ligneSeparation.setBackground(Color.WHITE);
      labelMotCache.setBackground(Color.WHITE);
      motCache.setBackground(Color.WHITE);
@@ -522,7 +536,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      interfaceClaire.setForeground(Color.BLACK);
      interfaceSombre.setForeground(Color.BLACK);
      pendu.setForeground(Color.BLACK);
-     affichageScore.setForeground(Color.BLACK);
+     labelScore.setForeground(Color.BLACK);
      ligneSeparation.setForeground(Color.BLACK);
      ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.WHITE));
      labelMotCache.setForeground(Color.BLACK);
@@ -542,7 +556,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      interfaceClaire.setBackground(Color.BLACK);
      interfaceSombre.setBackground(Color.BLACK);
      pendu.setBackground(Color.BLACK);
-     affichageScore.setBackground(Color.BLACK);
+     labelScore.setBackground(Color.BLACK);
      ligneSeparation.setBackground(Color.BLACK);
      labelMotCache.setBackground(Color.BLACK);
      motCache.setBackground(Color.BLACK);
@@ -556,7 +570,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      interfaceClaire.setForeground(Color.WHITE);
      interfaceSombre.setForeground(Color.WHITE);
      pendu.setForeground(Color.WHITE);
-     affichageScore.setForeground(Color.WHITE);
+     labelScore.setForeground(Color.WHITE);
      ligneSeparation.setForeground(Color.WHITE);
      ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.BLACK));
      labelMotCache.setForeground(Color.WHITE);
@@ -625,6 +639,7 @@ boutonFermerStats.setBackground(Color.WHITE);
                 this.motCache.setText(motCache);
             } else {
                 score--;
+                ajusterPendu(score);
             }
         }
         
@@ -678,5 +693,34 @@ boutonFermerStats.setBackground(Color.WHITE);
         
         //ClasseProvisoire.lireFichier("");//tst
         //ClasseProvisoire.ecrireFichier();//test
+    }
+
+    private void ajusterPendu(int score) {
+        if(score == 5){
+            pendu.setVisible(false);
+            pendu.setText(PENDU_UNE_ERREUR);
+            pendu.setVisible(true);
+        }else if(score == 4){
+            pendu.setVisible(false);
+            pendu.setText(PENDU_DEUX_ERREURS);
+            pendu.setVisible(true);
+        }else if(score == 3){
+            pendu.setVisible(false);
+            pendu.setText(PENDU_DEUX_ERREURS);
+            pendu.setVisible(true);
+        }else if(score == 2){
+            pendu.setVisible(false);
+            pendu.setText(PENDU_TROIS_ERREURS);
+            pendu.setVisible(true);
+        }else if(score == 1){
+            pendu.setVisible(false);
+            pendu.setText(PENDU_QUATRE_ERREURS);
+            pendu.setVisible(true);
+        }else if(score == 0){
+            pendu.setVisible(false);
+            pendu.setText(PENDU_DEUX_ERREURS);
+            pendu.setVisible(true);
+            JOptionPane.showMessageDialog(panelVue2, "Oups! Vous êtes mort.", "PARTIE PERDUE", JOptionPane.PLAIN_MESSAGE);
+        }
     }
 }
