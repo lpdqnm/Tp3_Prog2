@@ -62,7 +62,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     
     public static final String FIC_STATS = "statistiques.txt";
     public static final DecimalFormat DEC_FORMAT = new DecimalFormat("0.0");
-    public static final String TIRET = "_";
+    public static final String TIRET_BAS = "_";
     
     //VARIABLES D'INSTANCE
     
@@ -492,7 +492,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             if(lettre.getText().length()!= 1 || !ALPHABET.contains(lettre.getText())){
                 JOptionPane.showMessageDialog(panelVue2, "Vous devez entrer une lettre non accentuée!", "ERREUR", JOptionPane.WARNING_MESSAGE);
             } else {
-                resultatPartie(lettre.getText(), motTire);
+                resultatLettre(lettre.getText(), motTire);
             }
         }else if(Integer.parseInt(affichageScore.getText()) == 0){
             JOptionPane.showMessageDialog(panelVue2, "Bravo! Vous avez gagné la partie!", "PARTIE GAGNÉE", JOptionPane.PLAIN_MESSAGE);
@@ -608,21 +608,22 @@ boutonFermerStats.setBackground(Color.WHITE);
         String tirets = "";
         
         for (int i = 0; i < motTire.length(); i++) {
-            tirets += TIRET;
+            tirets += TIRET_BAS;
         }
         return tirets;
     } 
     
-    private boolean resultatPartie(String lettreChoisie, String motTire){
+    private boolean resultatLettre(String lettreChoisie, String motTire){
         boolean partieTerminee = false;
-        String motCache = this.motCache.getText();
+        String motCacheAff = motCache.getText();
         lettreChoisie = lettreChoisie.toUpperCase();
         motTire = motTire.toUpperCase();
         
-        if (score != 0 && !motCache.equals(motTire)) {            
+        if (score != 0 && !motCacheAff.equals(motTire)) {            
             if (motTire.contains(lettreChoisie)) {
-                motCache = remplacerLettreMotCache(lettreChoisie, motCache, motTire); 
-                this.motCache.setText(motCache);
+                motCacheAff = remplacerLettreMotCache(lettreChoisie, motCacheAff,
+                        motTire); 
+                motCache.setText(motCacheAff);
             } else {
                 score--;
             }
@@ -666,7 +667,7 @@ boutonFermerStats.setBackground(Color.WHITE);
     }
 
     public static void main(String[] params) {
-        new JeuPendu();
+        //new JeuPendu();
 
 //System.out.println("\n"+PENDU_ZERO_ERREUR);
 //        System.out.println("\n"+PENDU_UNE_ERREUR);
@@ -678,5 +679,10 @@ boutonFermerStats.setBackground(Color.WHITE);
         
         //ClasseProvisoire.lireFichier("");//tst
         //ClasseProvisoire.ecrireFichier();//test
+        
+        //System.out.println(new JeuPendu().tiretsCacherMot("motLg6"));//test-OK
+        JeuPendu jP = new JeuPendu();//test
+        System.out.println(jP.jouer());//test
+        System.out.println(jP.motCache.getText());//test
     }
 }
