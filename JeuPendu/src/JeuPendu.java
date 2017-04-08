@@ -1,10 +1,13 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DecimalFormat;
 import javax.swing.*;
 
 public class JeuPendu extends WindowAdapter implements ActionListener {
 
+    //CONSTANTES
+    
     public static final String ALPHABET = 
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final int LARGEUR = 500;
@@ -56,9 +59,15 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             + "\n               |        o         " + "\n               |       /|\\        "
             + "\n               |       /\\         " + "\n               |                  "
             + "\n             __|__________   " + "\n          __|_____________|__";
-
+    
+    public static final String FIC_STATS = "statistiques.txt";
+    public static final DecimalFormat DEC_FORMAT = new DecimalFormat("0.0");
+    public static final String TIRET = "_";
+    
+    //VARIABLES D'INSTANCE
+    
     private int score = 6; // le nb d'essais effectuée, on pourra se servir de cette variable pour faire les affichage du pendu.
-
+    
     //Vue 1:
     private JFrame fenetre;
     private JLabel titre;
@@ -113,7 +122,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JTextField champScoreMoyenNiv3;
     private JButton boutonFermerStats;
     
-    
+    //Tableaux des statistiques
+    private static String[] partiesNiv1 = {"niveau1", "0", "-", "-"};
+    private static String[] partiesNiv2 = {"niveau2", "0", "-", "-"};
+    private static String[] partiesNiv3 = {"niveau3", "0", "-", "-"};
     
 
     public JeuPendu() {
@@ -459,10 +471,12 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evenement) {
         String scoreNul = "" + 0;
+        String motTire = "";
         
         if (evenement.getSource() == boutonJouer) {
             initVue2();
             lettre.requestFocusInWindow();
+            motTire = jouer();
         } else if (evenement.getSource() == boutonStats) {
             initVue3();
         } else if(evenement.getSource() == boutonQuitter){
@@ -477,6 +491,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         }else if (evenement.getSource() == boutonSoumettre || evenement.getSource() == lettre ){
             if(lettre.getText().length()!= 1 || !ALPHABET.contains(lettre.getText())){
                 JOptionPane.showMessageDialog(panelVue2, "Vous devez entrer une lettre non accentuée!", "ERREUR", JOptionPane.WARNING_MESSAGE);
+            } else {
+                resultatPartie(lettre.getText(), motTire);
             }
         }else if(Integer.parseInt(affichageScore.getText()) == 0){
             JOptionPane.showMessageDialog(panelVue2, "Bravo! Vous avez gagné la partie!", "PARTIE GAGNÉE", JOptionPane.PLAIN_MESSAGE);
@@ -579,6 +595,66 @@ champPartiesGagneesNiv3.setBackground(Color.WHITE);
  champScoreMoyenNiv3.setBackground(Color.WHITE);
 boutonFermerStats.setBackground(Color.WHITE);
     } 
+    
+    private String jouer(){
+        String motTire = Mots.tirerUnMot((Integer)listeDifficulte
+                .getSelectedItem());
+        
+        motCache.setText(tiretsCacherMot(motTire));
+        return motTire;
+    }
+    
+    private String tiretsCacherMot(String motTire) {
+        String tirets = "";
+        
+        for (int i = 0; i < motTire.length(); i++) {
+            tirets += TIRET;
+        }
+        return tirets;
+    } 
+    
+    private boolean resultatPartie(String lettreChoisie, String motTire){
+        boolean partieTerminee = false;
+        String motCache = this.motCache.getText();
+        lettreChoisie = lettreChoisie.toUpperCase();
+        motTire = motTire.toUpperCase();
+        
+        if (score != 0 && !motCache.equals(motTire)) {            
+            if (motTire.contains(lettreChoisie)) {
+                motCache = remplacerLettreMotCache(lettreChoisie, motCache, motTire); 
+                this.motCache.setText(motCache);
+            } else {
+                score--;
+            }
+        }
+        
+//        if (score != 0 && !motCache.equals(motTire)) {
+//            partieTerminee = true;
+//        }
+        return partieTerminee;
+    }
+    
+    private String remplacerLettreMotCache(String lettreChoisie, 
+            String motCache, String motTire){
+        char carCache;
+        char carTire;
+
+        if (lettreChoisie != null && motCache != null && motTire != null) {
+            lettreChoisie = lettreChoisie.toUpperCase();
+            motTire = motTire.toUpperCase();
+            for (int i = 0; i < motTire.length(); i++) {
+                carTire = motTire.charAt(i);
+                carCache = motCache.charAt(i);
+                if (lettreChoisie.charAt(0)  == carTire) {
+                    motCache += "" + carTire;
+                } else {
+                    motCache += "" + carCache;
+                }
+            }
+        }
+        
+        return motCache;
+    }
 
     /**
      * Exécutée lorsque l'utilisateur ferme la fenetre.
@@ -590,7 +666,7 @@ boutonFermerStats.setBackground(Color.WHITE);
     }
 
     public static void main(String[] params) {
-//        new JeuPendu();
+        new JeuPendu();
 
 //System.out.println("\n"+PENDU_ZERO_ERREUR);
 //        System.out.println("\n"+PENDU_UNE_ERREUR);
@@ -600,7 +676,7 @@ boutonFermerStats.setBackground(Color.WHITE);
 //        System.out.println("\n"+PENDU_CINQ_ERREURS);
 //        System.out.println("\n"+PENDU_SIX_ERREURS);
         
-        ClasseProvisoire.lireFichier("");//tst
-        ClasseProvisoire.ecrireFichier();//test
+        //ClasseProvisoire.lireFichier("");//tst
+        //ClasseProvisoire.ecrireFichier();//test
     }
 }
