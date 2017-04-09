@@ -630,13 +630,11 @@ boutonFermerStats.setBackground(Color.WHITE);
     private boolean resultatLettre(String lettreChoisie, String motTire){
         boolean partieTerminee = false;
         String motCacheAff = motCache.getText();
-        lettreChoisie = lettreChoisie.toUpperCase();
-        motTire = motTire.toUpperCase();
         
-        if (score != 0 && !motCacheAff.equals(motTire)) {            
+        if (score != 0 && !motCacheAff.equalsIgnoreCase(motTire)) {            
             if (motTire.contains(lettreChoisie)) {
-                motCacheAff = remplacerLettreMotCache(lettreChoisie, motCacheAff,
-                        motTire); 
+                motCacheAff = remplacerLettreMotCache(lettreChoisie.toUpperCase(),
+                        motCacheAff, motTire.toUpperCase()); 
                 motCache.setText(motCacheAff);
             } else {
                 score--;
@@ -650,26 +648,23 @@ boutonFermerStats.setBackground(Color.WHITE);
         return partieTerminee;
     }
     
-    private String remplacerLettreMotCache(String lettreChoisie, 
-            String motCache, String motTire){
-        char carCache;
+    private String remplacerLettreMotCache(String lettreChoisieMaj, 
+            String motCache, String motTireMaj){
         char carTire;
+        String motCachePartiel = "";
 
-        if (lettreChoisie != null && motCache != null && motTire != null) {
-            lettreChoisie = lettreChoisie.toUpperCase();
-            motTire = motTire.toUpperCase();
-            for (int i = 0; i < motTire.length(); i++) {
-                carTire = motTire.charAt(i);
-                carCache = motCache.charAt(i);
-                if (lettreChoisie.charAt(0)  == carTire) {
-                    motCache += "" + carTire;
+        if (lettreChoisieMaj != null && motCache != null && motTireMaj != null) {
+            for (int i = 0; i < motTireMaj.length(); i++) {
+                carTire = motTireMaj.charAt(i);
+                if (lettreChoisieMaj.charAt(0)  == carTire) {
+                    motCachePartiel += "" + carTire;
                 } else {
-                    motCache += "" + carCache;
+                    motCachePartiel += "" + motCache.charAt(i);
                 }
             }
         }
         
-        return motCache;
+        return motCachePartiel;
     }
 
     /**
@@ -682,7 +677,7 @@ boutonFermerStats.setBackground(Color.WHITE);
     }
 
     public static void main(String[] params) {
-        //new JeuPendu();
+        new JeuPendu();
 
 //System.out.println("\n"+PENDU_ZERO_ERREUR);
 //        System.out.println("\n"+PENDU_UNE_ERREUR);
@@ -692,13 +687,7 @@ boutonFermerStats.setBackground(Color.WHITE);
 //        System.out.println("\n"+PENDU_CINQ_ERREURS);
 //        System.out.println("\n"+PENDU_SIX_ERREURS);
         
-        //ClasseProvisoire.lireFichier("");//tst
-        //ClasseProvisoire.ecrireFichier();//test
         
-        //System.out.println(new JeuPendu().tiretsCacherMot("motLg6"));//test-OK
-        JeuPendu jP = new JeuPendu();//test
-        System.out.println(jP.jouer());//test
-        System.out.println(jP.motCache.getText());//test
     }
 
     private void ajusterPendu(int score) {

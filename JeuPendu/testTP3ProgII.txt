@@ -1,0 +1,15 @@
+		//ClasseProvisoire.lireFichier("");//test-OK
+        //ClasseProvisoire.ecrireFichier();//test-OK
+        
+        //System.out.println(new JeuPendu().tiretsCacherMot("motLg6"));//test-OK
+		
+		--Tous les tests du bloc ci-dessous : OK
+		JeuPendu jP = new JeuPendu();//test
+        jP.initVue2();
+        System.out.println((Integer)jP.listeDifficulte.getSelectedItem());//test
+        String motTireJeu = jP.jouer();//test
+        System.out.println(motTireJeu);//test
+        System.out.println(jP.motCache.getText());//test
+        System.out.println(jP.remplacerLettreMotCache("e".toUpperCase(),
+                jP.motCache.getText(), motTireJeu.toUpperCase()));//test
+		
