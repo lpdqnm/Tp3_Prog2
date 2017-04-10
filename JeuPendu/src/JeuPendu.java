@@ -75,6 +75,9 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private int choixCouleurInterface = 0;
     private int choixNiveauDifficulte = 0;
     
+    private String motTire = "";//contiendra le mot tire pour chaques partie 
+    private int scoreGobal = 0;//cumul les scores de chaque partie
+    
     
     //Fenêtre principale
     private JFrame fenetre;
@@ -536,12 +539,12 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evenement) {
         String scoreNul = "" + 0;
-        String motTire = "";
+        boolean finPartie = false;
         
         if (evenement.getSource() == boutonJouer) {
             initVue2();
             lettre.requestFocusInWindow();
-            motTire = jouer();
+            jouer();
         } else if (evenement.getSource() == boutonStats) {
             initVue3();
         } else if(evenement.getSource() == boutonQuitter){
@@ -564,11 +567,21 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             this.choixCouleurInterface = 1;
             initVue2Sombre();
         }else if (evenement.getSource() == boutonSoumettre || evenement.getSource() == lettre ){
+            
             if(lettre.getText().length()!= 1 || !ALPHABET.contains(lettre.getText())){
                 JOptionPane.showMessageDialog(panelVue2, "Vous devez entrer une lettre non accentuée!", "ERREUR", JOptionPane.WARNING_MESSAGE);
+            } else if (motCache.getText().contains(lettre.getText()
+                    .toUpperCase())) {
+                JOptionPane.showMessageDialog(fenetre, "Cette lettre est déjà"
+                        + " décourverte", "Message", JOptionPane.WARNING_MESSAGE);
             } else {
-                resultatLettre(lettre.getText(), motTire);
+                finPartie = resultatLettre(lettre.getText(), motTire);
+                
+                if (finPartie) {
+                    //Ici, les stats
+                }
             }
+                
         }else if(Integer.parseInt(labelScore.getText()) == 0){
             JOptionPane.showMessageDialog(panelVue2, "Bravo! Vous avez gagné la partie!", "PARTIE GAGNÉE", JOptionPane.PLAIN_MESSAGE);
         }
@@ -673,12 +686,9 @@ boutonFermerStats.setBackground(Color.WHITE);
 
 } 
     
-    private String jouer(){
-        String motTire = Mots.tirerUnMot((Integer)listeDifficulte
-                .getSelectedItem());
-        
+    private void jouer(){
+        motTire = Mots.tirerUnMot((Integer)listeDifficulte.getSelectedItem());
         motCache.setText(tiretsCacherMot(motTire));
-        return motTire;
     }
     
     private String tiretsCacherMot(String motTire) {
@@ -691,7 +701,6 @@ boutonFermerStats.setBackground(Color.WHITE);
     } 
     
     private boolean resultatLettre(String lettreChoisie, String motTire){
-        boolean partieTerminee = false;
         String motCacheAff = motCache.getText();
         
         if (score != 0 && !motCacheAff.equalsIgnoreCase(motTire)) {            
@@ -699,16 +708,23 @@ boutonFermerStats.setBackground(Color.WHITE);
                 motCacheAff = remplacerLettreMotCache(lettreChoisie.toUpperCase(),
                         motCacheAff, motTire.toUpperCase()); 
                 motCache.setText(motCacheAff);
+                
+                if (motCacheAff.equalsIgnoreCase(motTire)) {
+                    JOptionPane.showConfirmDialog(fenetre, "BRAVO ! Vous avez "
+                            + "gagné la partie.\n  Mot caché  :" + motTire
+                            .toUpperCase() + "\n  Votre score : " + score + "\n"
+                            + "\nVoulez-vous jouer une autre partie ?", 
+                            "PARTIE GAGNÉE", JOptionPane.YES_NO_OPTION, 
+                            JOptionPane.PLAIN_MESSAGE);
+                }
             } else {
                 score--;
+                affichageScore.setText("" + score);
                 ajusterPendu(score);
             }
         }
-        
-//        if (score != 0 && !motCache.equals(motTire)) {
-//            partieTerminee = true;
-//        }
-        return partieTerminee;
+        //Retourne vrai si la partie est terminée
+        return score == 0 || motCacheAff.equalsIgnoreCase(motTire);
     }
     
     private String remplacerLettreMotCache(String lettreChoisieMaj, 
@@ -726,7 +742,6 @@ boutonFermerStats.setBackground(Color.WHITE);
                 }
             }
         }
-        
         return motCachePartiel;
     }
 
@@ -778,7 +793,13 @@ boutonFermerStats.setBackground(Color.WHITE);
             pendu.setVisible(false);
             pendu.setText(PENDU_DEUX_ERREURS);
             pendu.setVisible(true);
-            JOptionPane.showMessageDialog(panelVue2, "Oups! Vous êtes mort.", "PARTIE PERDUE", JOptionPane.PLAIN_MESSAGE);
+           //JOptionPane.showMessageDialog(panelVue2, "Oups! Vous êtes mort.", "PARTIE PERDUE", JOptionPane.PLAIN_MESSAGE);
+        
+            JOptionPane.showConfirmDialog(fenetre, "Oups! Vous êtes mort.\n  "
+                            + "Mot caché  :" + motTire.toUpperCase() + "\n\n"
+                            + "Voulez-vous jouer une autre partie ?", "PARTIE "
+                            + "PERDUE", JOptionPane.YES_NO_OPTION, JOptionPane
+                            .PLAIN_MESSAGE);
         }
     }
 }
