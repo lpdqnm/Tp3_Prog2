@@ -689,6 +689,7 @@ boutonFermerStats.setBackground(Color.WHITE);
     private void jouer(){
         motTire = Mots.tirerUnMot((Integer)listeDifficulte.getSelectedItem());
         motCache.setText(tiretsCacherMot(motTire));
+        score = 6;
     }
     
     private String tiretsCacherMot(String motTire) {
