@@ -62,12 +62,12 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     public static final String PENDU_SIX_ERREURS = "              ____________    "
             + "\n               |        |     " + "\n               |        |     "
             + "\n               |        o         " + "\n               |       /|\\        "
-            + "\n               |       /\\         " + "\n               |                  "
+            + "\n               |       / \\         " + "\n               |                  "
             + "\n             __|__________   " + "\n          __|_____________|__";
     
     public static final String FIC_STATS = "statistiques.txt";
     public static final DecimalFormat DEC_FORMAT = new DecimalFormat("0.0");
-    public static final String TIRET_BAS = "_";
+    public static final String TIRET_BAS = " _ ";
     
     //VARIABLES D'INSTANCE
     
@@ -102,7 +102,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JTextField affichageScore;
     private JTextField ligneSeparation;
     private JLabel labelMotCache;
-    private JTextField motCache; // ici il faudra dynamiser les _ _ _ _  pour que ceux-ci soient au bon nombre et change au fur et à mesure en focntion de ce qui se trouve dans le mot.txt.
+    private JTextField motCache; 
     private JLabel labelLettre;
     private JTextField lettre;
     private JButton boutonSoumettre;
@@ -279,6 +279,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         motCache = new JTextField ("");
         motCache.setBounds(labelMotCache.getX()+110, labelMotCache.getY()-10, 300, labelMotCache.getHeight()+20);
         motCache.setEditable(false);
+        motCache.setFont(FONT_SAISIE_LETTRE);
         
         labelLettre = new JLabel ("LETTRE");
         labelLettre.setBounds(labelMotCache.getX(), labelMotCache.getY()+50, 60, motCache.getHeight());
@@ -553,10 +554,20 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         }else if(evenement.getSource()== listeDifficulte){
             if(listeDifficulte.getSelectedIndex()==0){
                 this.choixNiveauDifficulte = 0;
+               lettre.requestFocusInWindow();
+                jouer();
+               
+                
+                        
             }else if(listeDifficulte.getSelectedIndex()==1){
-                this.choixNiveauDifficulte = 1;   
+                this.choixNiveauDifficulte = 1;
+                lettre.requestFocusInWindow();
+                jouer();
+                
             }else{
                 this.choixNiveauDifficulte = 2;
+                lettre.requestFocusInWindow();
+                jouer();
             }
         }else if(evenement.getSource() == boutonFermerStats){
             initVue1();
@@ -581,8 +592,9 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
                     //Ici, les stats
                 }
             }
+            lettre.setText("");
                 
-        }else if(Integer.parseInt(labelScore.getText()) == 0){
+        }else if(Integer.parseInt(affichageScore.getText()) == 0){
             JOptionPane.showMessageDialog(panelVue2, "Bravo! Vous avez gagné la partie!", "PARTIE GAGNÉE", JOptionPane.PLAIN_MESSAGE);
         }
 
@@ -597,11 +609,13 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      interfaceSombre.setBackground(Color.WHITE);
      pendu.setBackground(Color.WHITE);
      labelScore.setBackground(Color.WHITE);
+     affichageScore.setBackground(Color.WHITE);
      ligneSeparation.setBackground(Color.WHITE);
      labelMotCache.setBackground(Color.WHITE);
      motCache.setBackground(Color.WHITE);
      labelLettre.setBackground(Color.WHITE);
      panneauOptions.setBackground(Color.WHITE);
+     
         
      panelVue2.setForeground(Color.BLACK);
      difficulte.setForeground(Color.BLACK);
@@ -611,10 +625,13 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      interfaceSombre.setForeground(Color.BLACK);
      pendu.setForeground(Color.BLACK);
      labelScore.setForeground(Color.BLACK);
+  affichageScore.setForeground(Color.BLACK);
+  affichageScore.setBorder(BorderFactory.createLineBorder(Color.WHITE));
      ligneSeparation.setForeground(Color.BLACK);
      ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.WHITE));
      labelMotCache.setForeground(Color.BLACK);
      motCache.setForeground(Color.BLACK);
+     motCache.setBorder(BorderFactory.createLineBorder(Color.WHITE));
      labelLettre.setForeground(Color.BLACK);
      panneauOptions.setForeground(Color.BLACK);
      panneauOptions.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -631,6 +648,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      interfaceSombre.setBackground(Color.BLACK);
      pendu.setBackground(Color.BLACK);
      labelScore.setBackground(Color.BLACK);
+     affichageScore.setBackground(Color.BLACK);
      ligneSeparation.setBackground(Color.BLACK);
      labelMotCache.setBackground(Color.BLACK);
      motCache.setBackground(Color.BLACK);
@@ -645,10 +663,13 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      interfaceSombre.setForeground(Color.WHITE);
      pendu.setForeground(Color.WHITE);
      labelScore.setForeground(Color.WHITE);
+     affichageScore.setForeground(Color.WHITE);
+     affichageScore.setBorder(BorderFactory.createLineBorder(Color.BLACK));
      ligneSeparation.setForeground(Color.WHITE);
      ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.BLACK));
      labelMotCache.setForeground(Color.WHITE);
      motCache.setForeground(Color.WHITE);
+     motCache.setBorder(BorderFactory.createLineBorder(Color.BLACK));
      labelLettre.setForeground(Color.WHITE);
      panneauOptions.setForeground(Color.WHITE);
      panneauOptions.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -683,6 +704,8 @@ champPartiesGagneesNiv3.setBackground(Color.WHITE);
  champScoreMoyenNiv3.setBackground(Color.WHITE);
 boutonFermerStats.setBackground(Color.WHITE);
 
+ 
+
 
 } 
     
@@ -690,6 +713,8 @@ boutonFermerStats.setBackground(Color.WHITE);
         motTire = Mots.tirerUnMot((Integer)listeDifficulte.getSelectedItem());
         motCache.setText(tiretsCacherMot(motTire));
         score = 6;
+        affichageScore.setText("" + score);
+        ajusterPendu(score);
     }
     
     private String tiretsCacherMot(String motTire) {
@@ -711,7 +736,7 @@ boutonFermerStats.setBackground(Color.WHITE);
                 motCache.setText(motCacheAff);
                 
                 if (motCacheAff.equalsIgnoreCase(motTire)) {
-                    JOptionPane.showConfirmDialog(fenetre, "BRAVO ! Vous avez "
+                     JOptionPane.showConfirmDialog(fenetre, "BRAVO ! Vous avez "
                             + "gagné la partie.\n  Mot caché  :" + motTire
                             .toUpperCase() + "\n  Votre score : " + score + "\n"
                             + "\nVoulez-vous jouer une autre partie ?", 
@@ -780,19 +805,19 @@ boutonFermerStats.setBackground(Color.WHITE);
             pendu.setVisible(true);
         }else if(score == 3){
             pendu.setVisible(false);
-            pendu.setText(PENDU_DEUX_ERREURS);
+            pendu.setText(PENDU_TROIS_ERREURS);
             pendu.setVisible(true);
         }else if(score == 2){
             pendu.setVisible(false);
-            pendu.setText(PENDU_TROIS_ERREURS);
+            pendu.setText(PENDU_QUATRE_ERREURS);
             pendu.setVisible(true);
         }else if(score == 1){
             pendu.setVisible(false);
-            pendu.setText(PENDU_QUATRE_ERREURS);
+            pendu.setText(PENDU_CINQ_ERREURS);
             pendu.setVisible(true);
         }else if(score == 0){
             pendu.setVisible(false);
-            pendu.setText(PENDU_DEUX_ERREURS);
+            pendu.setText(PENDU_SIX_ERREURS);
             pendu.setVisible(true);
            //JOptionPane.showMessageDialog(panelVue2, "Oups! Vous êtes mort.", "PARTIE PERDUE", JOptionPane.PLAIN_MESSAGE);
         
