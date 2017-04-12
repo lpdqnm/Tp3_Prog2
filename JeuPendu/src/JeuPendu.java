@@ -689,7 +689,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         motCache.setText(tiretsCacherMot(motTire));
         score = 6;
         affichageScore.setText("" + score);
-        ajusterPendu(score);
+        pendu.setText(PENDU_ZERO_ERREUR);
     }
 
     private String tiretsCacherMot(String motTire) {
