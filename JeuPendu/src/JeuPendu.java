@@ -66,7 +66,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     public static final String FIC_STATS = "statistiques.txt";
     public static final DecimalFormat DEC_FORMAT = new DecimalFormat("0.0");
-    public static final String TIRET_BAS = " _ ";
+    public static final String TIRET_BAS_ESP = "_ ";
 
     //VARIABLES D'INSTANCE
     private int score = 6; // le nb d'essais effectuée, on pourra se servir de cette variable pour faire les affichage du pendu.
@@ -696,7 +696,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         String tirets = "";
 
         for (int i = 0; i < motTire.length(); i++) {
-            tirets += TIRET_BAS;
+            tirets += TIRET_BAS_ESP;
         }
         return tirets;
     }
@@ -704,13 +704,13 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private boolean resultatLettre(String lettreChoisie, String motTire) {
         String motCacheAff = motCache.getText();
 
-        if (score != 0 && !motCacheAff.equalsIgnoreCase(motTire)) {
-            if (motTire.contains(lettreChoisie)) {
+        if (score != 0 && motCacheAff.contains(TIRET_BAS_ESP)) {
+            if (motTire.toUpperCase().contains(lettreChoisie.toUpperCase())) {
                 motCacheAff = remplacerLettreMotCache(lettreChoisie.toUpperCase(),
                         motCacheAff, motTire.toUpperCase());
                 motCache.setText(motCacheAff);
 
-                if (motCacheAff.equalsIgnoreCase(motTire)) {
+                if (!motCacheAff.contains(TIRET_BAS_ESP)) {
                     gagne = JOptionPane.showConfirmDialog(fenetre, "BRAVO ! Vous avez "
                             + "gagné la partie.\n  Mot caché  :" + motTire
                                     .toUpperCase() + "\n  Votre score : " + score + "\n"
@@ -732,21 +732,19 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             }
         }
         //Retourne vrai si la partie est terminée
-        return score == 0 || motCacheAff.equalsIgnoreCase(motTire);
+        return score == 0 || !motCacheAff.contains(TIRET_BAS_ESP);
     }
 
     private String remplacerLettreMotCache(String lettreChoisieMaj,
             String motCache, String motTireMaj) {
-        char carTire;
         String motCachePartiel = "";
 
         if (lettreChoisieMaj != null && motCache != null && motTireMaj != null) {
             for (int i = 0; i < motTireMaj.length(); i++) {
-                carTire = motTireMaj.charAt(i);
-                if (lettreChoisieMaj.charAt(0) == carTire) {
-                    motCachePartiel += "" + carTire;
+                if (lettreChoisieMaj.charAt(0) == motTireMaj.charAt(i)) {
+                    motCachePartiel += lettreChoisieMaj + " ";
                 } else {
-                    motCachePartiel += "" + motCache.charAt(i);
+                    motCachePartiel += motCache.charAt(2 * i) + " ";
                 }
             }
         }
