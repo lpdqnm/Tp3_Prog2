@@ -64,9 +64,20 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             + "\n               |       / \\         " + "\n               |                  "
             + "\n             __|__________   " + "\n          __|_____________|__";
 
+    //Chaines pour le fichier des statistiques
+    public static final String NIV_1 = "Niveau 1:";
+    public static final String NIV_2 = "Niveau 1:";
+    public static final String NIV_3 = "Niveau 3:";
+    
     public static final String FIC_STATS = "statistiques.txt";
     public static final DecimalFormat DEC_FORMAT = new DecimalFormat("0.0");
     public static final String TIRET_BAS_ESP = "_ ";
+    
+    //Entiers pour les indices des tableau compteurNiv1,2,3
+    public static final int PARTIES = 0;
+    public static final int PARTIES_GAG = 1;
+    public static final int SCORE_GL = 2;
+    public static final int SCORE_MY = SCORE_GL;
 
     //VARIABLES D'INSTANCE
     private int score = 6; // le nb d'essais effectuée, on pourra se servir de cette variable pour faire les affichage du pendu.
@@ -133,10 +144,15 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JTextField champScoreMoyenNiv3;
     private JButton boutonFermerStats;
 
+    
     //Tableaux des statistiques
-    private static String[] partiesNiv1 = {"niveau1", "0", "-", "-"};
-    private static String[] partiesNiv2 = {"niveau2", "0", "-", "-"};
-    private static String[] partiesNiv3 = {"niveau3", "0", "-", "-"};
+    private static String[] partiesNiv1 = {"0", "-", "-"};
+    private static String[] partiesNiv2 = {"0", "-", "-"};
+    private static String[] partiesNiv3 = {"0", "-", "-"};
+    //Tableau comptant  les parties jouées, gagnées et les scores
+    private int[] compteurNiv1 = new int[3];
+    private int[] compteurNiv2 = new int[3];
+    private int[] compteurNiv3 = new int[3];
 
     public JeuPendu() {
         initFenetre();
@@ -751,6 +767,47 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         return motCachePartiel;
     }
 
+    private int[] compteurNivJeu(int[] compteurNiv, int scorePartie) {
+        if (compteurNiv != null && compteurNiv.length == 3 && scorePartie >= 0) {
+            compteurNiv[PARTIES]++;
+            if (scorePartie >0) {
+                compteurNiv[PARTIES_GAG]++;
+                compteurNiv[SCORE_GL] += scorePartie;
+            }
+        }
+        return compteurNiv;
+    }
+    
+    private static String[] partiesNivJeu(String[] partiesNiv, int[] compteurNiv) {
+        partiesNiv[PARTIES] ="" + compteurNiv[PARTIES];
+        if (compteurNiv[PARTIES] > 0) {
+            partiesNiv[PARTIES_GAG] = DEC_FORMAT.format(100.0 
+                    * compteurNiv[PARTIES_GAG] / compteurNiv[PARTIES]);
+            partiesNiv[SCORE_MY] = DEC_FORMAT.format(100.0 
+                    * compteurNiv[SCORE_GL] / compteurNiv[PARTIES]);
+        }
+        return partiesNiv;
+    }
+    
+    private void statsNivJeu(int nivJeu) {
+        switch(nivJeu) {
+            case 1:
+                partiesNiv1 = partiesNivJeu(partiesNiv1, 
+                        compteurNivJeu(compteurNiv1, score));
+                break;
+            case 2:
+                partiesNiv2 = partiesNivJeu(partiesNiv2, 
+                        compteurNivJeu(compteurNiv2, score));
+                break;
+            case 3:
+                partiesNiv3 = partiesNivJeu(partiesNiv3, 
+                        compteurNivJeu(compteurNiv3, score));
+                break;
+            default:
+                break;
+        }
+    }
+    
     /**
      * Exécutée lorsque l'utilisateur ferme la fenetre.
      *
