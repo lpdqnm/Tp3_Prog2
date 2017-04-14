@@ -75,6 +75,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     
     //Entiers pour les indices des tableau compteurNiv1,2,3
     public static final int PARTIES = 0;
+    public static final int JOUEES = 0;
     public static final int PARTIES_GAG = 1;
     public static final int SCORE_GL = 2;
     public static final int SCORE_MY = SCORE_GL;
@@ -581,11 +582,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
                         + " décourverte", "Message", JOptionPane.WARNING_MESSAGE);
                 lettre.requestFocusInWindow();
             } else {
-                finPartie = resultatLettre(lettre.getText(), motTire);
-
-                if (finPartie) {
-                    //Ici, les stats
-                }
+                resultatPartie();
             }
             lettre.setText("");
 
@@ -717,6 +714,26 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         return tirets;
     }
 
+    private void resultatPartie() {
+        boolean finPartie = resultatLettre(lettre.getText(), motTire);
+
+        if (finPartie) {
+            statsNivJeu((Integer) listeDifficulte.getSelectedItem());
+            
+            champPartiesJoueesNiv1.setText(partiesNiv1[JOUEES]);
+            champPartiesGagneesNiv1.setText(partiesNiv1[PARTIES_GAG]);
+            champScoreMoyenNiv1.setText(partiesNiv1[SCORE_MY]);
+            
+            champPartiesJoueesNiv2.setText(partiesNiv2[JOUEES]);
+            champPartiesGagneesNiv2.setText(partiesNiv2[PARTIES_GAG]);
+            champScoreMoyenNiv2.setText(partiesNiv2[SCORE_MY]);
+            
+            champPartiesJoueesNiv3.setText(partiesNiv3[JOUEES]);
+            champPartiesGagneesNiv3.setText(partiesNiv3[PARTIES_GAG]);
+            champScoreMoyenNiv3.setText(partiesNiv3[SCORE_MY]);
+        }
+    }
+    
     private boolean resultatLettre(String lettreChoisie, String motTire) {
         String motCacheAff = motCache.getText();
 
@@ -746,8 +763,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
                 affichageScore.setText("" + score);
                 ajusterPendu(score);
             }
-        }
-        //Retourne vrai si la partie est terminée
+        }//Retourne vrai si la partie est terminée
         return score == 0 || !motCacheAff.contains(TIRET_BAS_ESP);
     }
 
@@ -779,10 +795,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
     
     private static String[] partiesNivJeu(String[] partiesNiv, int[] compteurNiv) {
-        partiesNiv[PARTIES] ="" + compteurNiv[PARTIES];
+        partiesNiv[JOUEES] ="" + compteurNiv[PARTIES];
         if (compteurNiv[PARTIES] > 0) {
             partiesNiv[PARTIES_GAG] = DEC_FORMAT.format(100.0 
-                    * compteurNiv[PARTIES_GAG] / compteurNiv[PARTIES]);
+                    * compteurNiv[PARTIES_GAG] / compteurNiv[PARTIES]) + " %";
             partiesNiv[SCORE_MY] = DEC_FORMAT.format(100.0 
                     * compteurNiv[SCORE_GL] / compteurNiv[PARTIES]);
         }
@@ -790,18 +806,19 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
     
     private void statsNivJeu(int nivJeu) {
+        
         switch(nivJeu) {
             case 1:
-                partiesNiv1 = partiesNivJeu(partiesNiv1, 
-                        compteurNivJeu(compteurNiv1, score));
+                compteurNiv1 = compteurNivJeu(compteurNiv1, score);
+                partiesNiv1 = partiesNivJeu(partiesNiv1, compteurNiv1);
                 break;
             case 2:
-                partiesNiv2 = partiesNivJeu(partiesNiv2, 
-                        compteurNivJeu(compteurNiv2, score));
+                compteurNiv2 = compteurNivJeu(compteurNiv2, score);
+                partiesNiv2 = partiesNivJeu(partiesNiv2, compteurNiv2);
                 break;
             case 3:
-                partiesNiv3 = partiesNivJeu(partiesNiv3, 
-                        compteurNivJeu(compteurNiv3, score));
+                compteurNiv3 = compteurNivJeu(compteurNiv3, score);
+                partiesNiv3 = partiesNivJeu(partiesNiv1, compteurNiv3);
                 break;
             default:
                 break;
@@ -827,6 +844,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 //        System.out.println("\n"+PENDU_QUATRE_ERREURS);
 //        System.out.println("\n"+PENDU_CINQ_ERREURS);
 //        System.out.println("\n"+PENDU_SIX_ERREURS);
+
+        
     }
 
     private void ajusterPendu(int score) {

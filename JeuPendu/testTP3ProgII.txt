@@ -1,6 +1,8 @@
 		//ClasseProvisoire.lireFichier("");//test-OK
         //ClasseProvisoire.ecrireFichier();//test-OK
         
+		ligne.split("[|]{1}");
+		
         //System.out.println(new JeuPendu().tiretsCacherMot("motLg6"));//test-OK
 		
 		--Tous les tests du bloc ci-dessous : OK

@@ -17,9 +17,9 @@ import java.io.PrintWriter;
  */
 public class ClasseProvisoire {
 
-    private static String[] partiesNiv1 = {"niveau1", "0", "-", "-"};
-    private static String[] partiesNiv2 = {"niveau2", "0", "-", "-"};
-    private static String[] partiesNiv3 = {"niveau3", "0", "-", "-"};
+    private static String[] partiesNiv1 = {"0", "-", "-"};
+    private static String[] partiesNiv2 = {"0", "-", "-"};
+    private static String[] partiesNiv3 = {"0", "-", "-"};
 
     public static void ecrireFichier() {
         //String[] partiesNiv1 = {"niveau1", "0", "-", "-"};
@@ -28,11 +28,9 @@ public class ClasseProvisoire {
         try {
             out = new PrintWriter(new FileWriter("statistiques.txt"));
 
-            ecrireLigneFichier(out, partiesNiv1);
-            out.println();
-            ecrireLigneFichier(out, partiesNiv2);
-            out.println();
-            ecrireLigneFichier(out, partiesNiv3);
+            ecrireLigneFichier(out, partiesNiv1, 1);
+            ecrireLigneFichier(out, partiesNiv2, 2);
+            ecrireLigneFichier(out, partiesNiv3, 3);
 
             out.close();
         } catch (FileNotFoundException e) {
@@ -43,18 +41,26 @@ public class ClasseProvisoire {
     }
 
     public static void ecrireLigneFichier(PrintWriter out, 
-            String[] partiesNiveau) throws IOException{
+            String[] partiesNiveau, int niv) throws IOException{
+        out.println("Niveau " + niv);//Le niveau est en entête
+        
         for (int i = 0; i < partiesNiveau.length; i++) {
             if (i != 0) {
-                out.print("|");
+                out.print(" : ");
             }
             out.print(partiesNiveau[i]);
         }
+        if (niv != 3) {
+            out.println("\n");
+        }
+        
     }
     
     public static void lireFichier(String ficEntree) {
         BufferedReader in;
-        String ligne = "";
+        String ligne;
+        String entete;
+        String saut;
         int i = 0;
 
       try {
@@ -62,14 +68,21 @@ public class ClasseProvisoire {
 
          while (in.ready()) {
              i++;
+             entete = in. readLine();
             ligne = in.readLine().trim();
+             if (i != 3) {
+                 saut = in.readLine();
+             }
+            
+             
+            System.out.println(entete);//test
             
             switch(i) {
-                case 1: partiesNiv1 = ligne.split("[|]{1}");
+                case 1: partiesNiv1 = ligne.split(" : ");;
                     break;
-                case 2: partiesNiv2 = ligne.split("[|]{1}");
+                case 2: partiesNiv2 = ligne.split(" : ");
                     break;
-                case 3: partiesNiv3= ligne.split("[|]{1}");
+                case 3: partiesNiv3= ligne.split(" : ");
                     break;
                 default:
             }
