@@ -1,6 +1,11 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import javax.swing.*;
 
@@ -65,20 +70,18 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             + "\n             __|__________   " + "\n          __|_____________|__";
 
     //Chaines pour le fichier des statistiques
-    public static final String NIV_1 = "Niveau 1:";
-    public static final String NIV_2 = "Niveau 1:";
-    public static final String NIV_3 = "Niveau 3:";
+    public static final String NIV = "Niveau ";
     
     public static final String FIC_STATS = "statistiques.txt";
     public static final DecimalFormat DEC_FORMAT = new DecimalFormat("0.0");
     public static final String TIRET_BAS_ESP = "_ ";
     
-    //Entiers pour les indices des tableau compteurNiv1,2,3
+    //Entiers pour les indices des tableau compteurNiv1,2,3 et partiesNiv1,2,3
     public static final int PARTIES = 0;
-    public static final int JOUEES = 0;
+    public static final int JOUEES = PARTIES;
     public static final int PARTIES_GAG = 1;
-    public static final int SCORE_GL = 2;
-    public static final int SCORE_MY = SCORE_GL;
+    public static final int SCORE_TOT = 2;
+    public static final int SCORE_MY = SCORE_TOT;
 
     //VARIABLES D'INSTANCE
     private int score = 6; // le nb d'essais effectuée, on pourra se servir de cette variable pour faire les affichage du pendu.
@@ -535,8 +538,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent evenement) {
-        String scoreNul = "" + 0;
-        boolean finPartie = false;
 
         if (evenement.getSource() == boutonJouer) {
             initVue2();
@@ -544,6 +545,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             jouer();
         } else if (evenement.getSource() == boutonStats) {
             initVue3();
+            mettreStatsVue3();
         } else if (evenement.getSource() == boutonQuitter) {
             initVue1();
 
@@ -697,6 +699,21 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     }
 
+    private void mettreStatsVue3() {
+        
+        champPartiesJoueesNiv1.setText(partiesNiv1[JOUEES]);
+        champPartiesGagneesNiv1.setText(partiesNiv1[PARTIES_GAG]);
+        champScoreMoyenNiv1.setText(partiesNiv1[SCORE_MY]);
+
+        champPartiesJoueesNiv2.setText(partiesNiv2[JOUEES]);
+        champPartiesGagneesNiv2.setText(partiesNiv2[PARTIES_GAG]);
+        champScoreMoyenNiv2.setText(partiesNiv2[SCORE_MY]);
+
+        champPartiesJoueesNiv3.setText(partiesNiv3[JOUEES]);
+        champPartiesGagneesNiv3.setText(partiesNiv3[PARTIES_GAG]);
+        champScoreMoyenNiv3.setText(partiesNiv3[SCORE_MY]);
+    }
+    
     private void jouer() {
         motTire = Mots.tirerUnMot((Integer) listeDifficulte.getSelectedItem());
         motCache.setText(tiretsCacherMot(motTire));
@@ -719,18 +736,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
         if (finPartie) {
             statsNivJeu((Integer) listeDifficulte.getSelectedItem());
-            
-            champPartiesJoueesNiv1.setText(partiesNiv1[JOUEES]);
-            champPartiesGagneesNiv1.setText(partiesNiv1[PARTIES_GAG]);
-            champScoreMoyenNiv1.setText(partiesNiv1[SCORE_MY]);
-            
-            champPartiesJoueesNiv2.setText(partiesNiv2[JOUEES]);
-            champPartiesGagneesNiv2.setText(partiesNiv2[PARTIES_GAG]);
-            champScoreMoyenNiv2.setText(partiesNiv2[SCORE_MY]);
-            
-            champPartiesJoueesNiv3.setText(partiesNiv3[JOUEES]);
-            champPartiesGagneesNiv3.setText(partiesNiv3[PARTIES_GAG]);
-            champScoreMoyenNiv3.setText(partiesNiv3[SCORE_MY]);
         }
     }
     
@@ -788,7 +793,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             compteurNiv[PARTIES]++;
             if (scorePartie >0) {
                 compteurNiv[PARTIES_GAG]++;
-                compteurNiv[SCORE_GL] += scorePartie;
+                compteurNiv[SCORE_TOT] += scorePartie;
             }
         }
         return compteurNiv;
@@ -798,9 +803,9 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         partiesNiv[JOUEES] ="" + compteurNiv[PARTIES];
         if (compteurNiv[PARTIES] > 0) {
             partiesNiv[PARTIES_GAG] = DEC_FORMAT.format(100.0 
-                    * compteurNiv[PARTIES_GAG] / compteurNiv[PARTIES]) + " %";
+                    * compteurNiv[PARTIES_GAG] / compteurNiv[PARTIES]) + "%";
             partiesNiv[SCORE_MY] = DEC_FORMAT.format(100.0 
-                    * compteurNiv[SCORE_GL] / compteurNiv[PARTIES]);
+                    * compteurNiv[SCORE_TOT] / compteurNiv[PARTIES]);
         }
         return partiesNiv;
     }
@@ -832,9 +837,16 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      */
     @Override
     public void windowClosing(WindowEvent e) {
+        //Sauvegarde les statistiques à la fermeture de lafenêtre dans un 
+        //fichier texte
+        ecrireFichier();
     }
 
     public static void main(String[] params) {
+        //Lecture du fichier des statistiques s'il existe
+        lireFichier(FIC_STATS);
+        
+        //Démarre l'application
         new JeuPendu();
 
 //System.out.println("\n"+PENDU_ZERO_ERREUR);
@@ -845,7 +857,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 //        System.out.println("\n"+PENDU_CINQ_ERREURS);
 //        System.out.println("\n"+PENDU_SIX_ERREURS);
 
-        
     }
 
     private void ajusterPendu(int score) {
@@ -887,4 +898,72 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             }
         }
     }
+    
+    public static void ecrireFichier() {
+        PrintWriter out;
+
+        try {
+            out = new PrintWriter(new FileWriter(FIC_STATS));
+
+            ecrireNivFichier(out, partiesNiv1, 1);
+            ecrireNivFichier(out, partiesNiv2, 2);
+            ecrireNivFichier(out, partiesNiv3, 3);
+
+            out.close();
+        } catch (IOException e) {
+            //aucune écriture dans le fichier
+        }
+    }
+
+    public static void ecrireNivFichier(PrintWriter out, 
+            String[] partiesNiveau, int niv) throws IOException{
+        out.println(NIV + niv);//Le niveau est en entête
+        
+        for (int i = 0; i < partiesNiveau.length; i++) {
+            if (i != 0) {
+                out.print(" : ");
+            }
+            out.print(partiesNiveau[i]);
+        }
+        if (niv != 3) {
+            out.print("\n\n");
+        }
+    }
+    
+    public static void lireFichier(String ficEntree) {
+        BufferedReader in;
+        String entete;
+        String ligne;
+        String saut;
+        int niv = 0;
+
+      try {
+         in = new BufferedReader(new FileReader(ficEntree));
+
+         while (in.ready()) {
+             niv++;
+             entete = in.readLine();
+            ligne = in.readLine().trim();
+             if (niv != 3) {
+                 saut = in.readLine();
+             }
+                        
+            switch(niv) {
+                case 1: partiesNiv1 = ligne.split(" : ");;
+                    break;
+                case 2: partiesNiv2 = ligne.split(" : ");
+                    break;
+                case 3: partiesNiv3= ligne.split(" : ");
+                    break;
+                default:
+            }
+         }
+         
+        in.close();
+           
+        } catch (IOException e) {
+           //maintient les tableaux partiesNiv à leurs valeurs initials
+        }
+    }
+    
 }

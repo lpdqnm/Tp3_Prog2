@@ -1,4 +1,4 @@
-		//ClasseProvisoire.lireFichier("");//test-OK
+		//ClasseProvisoire.lireFichier("statistiquesLire.txt");//test-OK
         //ClasseProvisoire.ecrireFichier();//test-OK
         
 		ligne.split("[|]{1}");

@@ -22,25 +22,22 @@ public class ClasseProvisoire {
     private static String[] partiesNiv3 = {"0", "-", "-"};
 
     public static void ecrireFichier() {
-        //String[] partiesNiv1 = {"niveau1", "0", "-", "-"};
         PrintWriter out;
 
         try {
             out = new PrintWriter(new FileWriter("statistiques.txt"));
 
-            ecrireLigneFichier(out, partiesNiv1, 1);
-            ecrireLigneFichier(out, partiesNiv2, 2);
-            ecrireLigneFichier(out, partiesNiv3, 3);
+            ecrireNivFichier(out, partiesNiv1, 1);
+            ecrireNivFichier(out, partiesNiv2, 2);
+            ecrireNivFichier(out, partiesNiv3, 3);
 
             out.close();
-        } catch (FileNotFoundException e) {
-
         } catch (IOException e) {
-
+            //pas d'écriture dans le fichier
         }
     }
 
-    public static void ecrireLigneFichier(PrintWriter out, 
+    public static void ecrireNivFichier(PrintWriter out, 
             String[] partiesNiveau, int niv) throws IOException{
         out.println("Niveau " + niv);//Le niveau est en entête
         
@@ -51,33 +48,31 @@ public class ClasseProvisoire {
             out.print(partiesNiveau[i]);
         }
         if (niv != 3) {
-            out.println("\n");
+            out.print("\n\n");
         }
-        
     }
     
     public static void lireFichier(String ficEntree) {
         BufferedReader in;
-        String ligne;
         String entete;
+        String ligne;
         String saut;
-        int i = 0;
+        int niv = 0;
 
       try {
-         in = new BufferedReader(new FileReader("statistiquesLire.txt"));
+         in = new BufferedReader(new FileReader(ficEntree));
 
          while (in.ready()) {
-             i++;
-             entete = in. readLine();
+             niv++;
+             entete = in.readLine();
             ligne = in.readLine().trim();
-             if (i != 3) {
+             if (niv != 3) {
                  saut = in.readLine();
              }
             
-             
             System.out.println(entete);//test
             
-            switch(i) {
+            switch(niv) {
                 case 1: partiesNiv1 = ligne.split(" : ");;
                     break;
                 case 2: partiesNiv2 = ligne.split(" : ");
@@ -94,7 +89,7 @@ public class ClasseProvisoire {
            System.out.println(java.util.Arrays.toString(partiesNiv2));//test
            System.out.println(java.util.Arrays.toString(partiesNiv3));//test
         } catch (IOException e) {
-           //retourne liste vide
+           //maintient les tableaux partiesNiv à leurs valeurs initials
         }
     }
     
