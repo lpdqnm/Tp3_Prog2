@@ -846,23 +846,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         ecrireFichier();
     }
 
-    public static void main(String[] params) {
-        //Lecture du fichier des statistiques s'il existe
-        lireFichier(FIC_STATS);
-        
-        //Démarre l'application
-        new JeuPendu();
-
-//System.out.println("\n"+PENDU_ZERO_ERREUR);
-//        System.out.println("\n"+PENDU_UNE_ERREUR);
-//        System.out.println("\n"+PENDU_DEUX_ERREURS);
-//        System.out.println("\n"+PENDU_TROIS_ERREURS);
-//        System.out.println("\n"+PENDU_QUATRE_ERREURS);
-//        System.out.println("\n"+PENDU_CINQ_ERREURS);
-//        System.out.println("\n"+PENDU_SIX_ERREURS);
-
-    }
-
     private void ajusterPendu(int score) {
         if (score == 5) {
             pendu.setVisible(false);
@@ -968,6 +951,23 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         } catch (IOException e) {
            //maintient les tableaux partiesNiv à leurs valeurs initials
         }
+    }
+    
+    public static void main(String[] params) {
+        //Lecture du fichier des statistiques s'il existe
+        lireFichier(FIC_STATS);
+        
+        //Démarre l'application
+        new JeuPendu();
+
+//System.out.println("\n"+PENDU_ZERO_ERREUR);
+//        System.out.println("\n"+PENDU_UNE_ERREUR);
+//        System.out.println("\n"+PENDU_DEUX_ERREURS);
+//        System.out.println("\n"+PENDU_TROIS_ERREURS);
+//        System.out.println("\n"+PENDU_QUATRE_ERREURS);
+//        System.out.println("\n"+PENDU_CINQ_ERREURS);
+//        System.out.println("\n"+PENDU_SIX_ERREURS);
+
     }
     
 }
