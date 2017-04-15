@@ -22,6 +22,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             Font.PLAIN, 12);
     public static final Font FONT_SAISIE_LETTRE = new Font("Courier New",
             Font.BOLD, 24);
+    public static final Font FONT_MOT_CACHE = new Font("Courier New",
+            Font.BOLD, 20);
     public static final Font FONT_SCORE = new Font("Courier", Font.BOLD, 12);
     public static final String TRAIT = "_______________________________________"
             + "____________________________";
@@ -280,12 +282,12 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
         labelMotCache = new JLabel("MOT CACHÉ");
-        labelMotCache.setBounds(ligneSeparation.getX(), ligneSeparation.getY() + 40, labelScore.getWidth() + 10, labelScore.getHeight());
+        labelMotCache.setBounds(ligneSeparation.getX(), ligneSeparation.getY() + 40, labelScore.getWidth()+10, labelScore.getHeight());
 
         motCache = new JTextField("");
-        motCache.setBounds(labelMotCache.getX() + 110, labelMotCache.getY() - 10, 300, labelMotCache.getHeight() + 20);
+        motCache.setBounds(labelMotCache.getX() + 100, labelMotCache.getY() - 10, 350, labelMotCache.getHeight() + 20);
         motCache.setEditable(false);
-        motCache.setFont(FONT_SAISIE_LETTRE);
+        motCache.setFont(FONT_MOT_CACHE);
 
         labelLettre = new JLabel("LETTRE");
         labelLettre.setBounds(labelMotCache.getX(), labelMotCache.getY() + 50, 60, motCache.getHeight());
@@ -583,8 +585,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
                 lettre.requestFocusInWindow();
             } else {
                 resultatPartie();
+                lettre.requestFocusInWindow();
             }
             lettre.setText("");
+            lettre.requestFocusInWindow();
 
         } else if (Integer.parseInt(affichageScore.getText()) == 0) {
             JOptionPane.showMessageDialog(panelVue2, "Bravo! Vous avez gagné la partie!", "PARTIE GAGNÉE", JOptionPane.PLAIN_MESSAGE);
