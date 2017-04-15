@@ -960,7 +960,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         //Démarre l'application
         new JeuPendu();
 
-//System.out.println("\n"+PENDU_ZERO_ERREUR);
+//        System.out.println("\n"+PENDU_ZERO_ERREUR);
 //        System.out.println("\n"+PENDU_UNE_ERREUR);
 //        System.out.println("\n"+PENDU_DEUX_ERREURS);
 //        System.out.println("\n"+PENDU_TROIS_ERREURS);
