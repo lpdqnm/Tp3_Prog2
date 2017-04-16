@@ -379,7 +379,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelPartiesJoueesNiv1.setFont(FONT_LABELS_NIVEAUX);
 
         champPartiesJoueesNiv1 = new JTextField("0");
-        champPartiesJoueesNiv1.setBounds(labelPartiesJoueesNiv1.getX() + 135, labelPartiesJoueesNiv1.getY() - 2, 20, 15);
+        champPartiesJoueesNiv1.setBounds(labelPartiesJoueesNiv1.getX() + 135, labelPartiesJoueesNiv1.getY() - 2, 40, 15);
         champPartiesJoueesNiv1.setBackground(Color.WHITE);
         champPartiesJoueesNiv1.setEditable(false);
         champPartiesJoueesNiv1.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -390,7 +390,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelPartiesGagneesNiv1.setFont(FONT_LABELS_NIVEAUX);
 
         champPartiesGagneesNiv1 = new JTextField("-");
-        champPartiesGagneesNiv1.setBounds(labelPartiesGagneesNiv1.getX() + 135, labelPartiesGagneesNiv1.getY() - 2, 20, 15);
+        champPartiesGagneesNiv1.setBounds(labelPartiesGagneesNiv1.getX() + 135, labelPartiesGagneesNiv1.getY() - 2, 40, 15);
         champPartiesGagneesNiv1.setBackground(Color.WHITE);
         champPartiesGagneesNiv1.setEditable(false);
         champPartiesGagneesNiv1.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -401,7 +401,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelScoreMoyenNiv1.setFont(FONT_LABELS_NIVEAUX);
 
         champScoreMoyenNiv1 = new JTextField("-");
-        champScoreMoyenNiv1.setBounds(labelScoreMoyenNiv1.getX() + 135, labelScoreMoyenNiv1.getY() - 2, 20, 15);
+        champScoreMoyenNiv1.setBounds(labelScoreMoyenNiv1.getX() + 135, labelScoreMoyenNiv1.getY() - 2, 40, 15);
         champScoreMoyenNiv1.setBackground(Color.WHITE);
         champScoreMoyenNiv1.setEditable(false);
         champScoreMoyenNiv1.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -422,7 +422,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelPartiesJoueesNiv2.setFont(FONT_LABELS_NIVEAUX);
 
         champPartiesJoueesNiv2 = new JTextField("0");
-        champPartiesJoueesNiv2.setBounds(labelPartiesJoueesNiv2.getX() + 135, labelPartiesJoueesNiv2.getY() - 2, 20, 15);
+        champPartiesJoueesNiv2.setBounds(labelPartiesJoueesNiv2.getX() + 135, labelPartiesJoueesNiv2.getY() - 2, 40, 15);
         champPartiesJoueesNiv2.setBackground(Color.WHITE);
         champPartiesJoueesNiv2.setEditable(false);
         champPartiesJoueesNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -433,7 +433,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelPartiesGagneesNiv2.setFont(FONT_LABELS_NIVEAUX);
 
         champPartiesGagneesNiv2 = new JTextField("-");
-        champPartiesGagneesNiv2.setBounds(labelPartiesGagneesNiv2.getX() + 135, labelPartiesGagneesNiv2.getY() - 2, 20, 15);
+        champPartiesGagneesNiv2.setBounds(labelPartiesGagneesNiv2.getX() + 135, labelPartiesGagneesNiv2.getY() - 2, 40, 15);
         champPartiesGagneesNiv2.setBackground(Color.WHITE);
         champPartiesGagneesNiv2.setEditable(false);
         champPartiesGagneesNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -444,7 +444,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelScoreMoyenNiv2.setFont(FONT_LABELS_NIVEAUX);
 
         champScoreMoyenNiv2 = new JTextField("-");
-        champScoreMoyenNiv2.setBounds(labelScoreMoyenNiv2.getX() + 135, labelScoreMoyenNiv2.getY() - 2, 20, 15);
+        champScoreMoyenNiv2.setBounds(labelScoreMoyenNiv2.getX() + 135, labelScoreMoyenNiv2.getY() - 2, 40, 15);
         champScoreMoyenNiv2.setBackground(Color.WHITE);
         champScoreMoyenNiv2.setEditable(false);
         champScoreMoyenNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -465,7 +465,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelPartiesJoueesNiv3.setFont(FONT_LABELS_NIVEAUX);
 
         champPartiesJoueesNiv3 = new JTextField("0");
-        champPartiesJoueesNiv3.setBounds(labelPartiesJoueesNiv3.getX() + 135, labelPartiesJoueesNiv3.getY() - 2, 20, 15);
+        champPartiesJoueesNiv3.setBounds(labelPartiesJoueesNiv3.getX() + 135, labelPartiesJoueesNiv3.getY() - 2, 40, 15);
         champPartiesJoueesNiv3.setBackground(Color.WHITE);
         champPartiesJoueesNiv3.setEditable(false);
         champPartiesJoueesNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -476,7 +476,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelPartiesGagneesNiv3.setFont(FONT_LABELS_NIVEAUX);
 
         champPartiesGagneesNiv3 = new JTextField("-");
-        champPartiesGagneesNiv3.setBounds(labelPartiesGagneesNiv3.getX() + 135, labelPartiesGagneesNiv3.getY() - 2, 20, 15);
+        champPartiesGagneesNiv3.setBounds(labelPartiesGagneesNiv3.getX() + 135, labelPartiesGagneesNiv3.getY() - 2, 40, 15);
         champPartiesGagneesNiv3.setBackground(Color.WHITE);
         champPartiesGagneesNiv3.setEditable(false);
         champPartiesGagneesNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -487,7 +487,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         labelScoreMoyenNiv3.setFont(FONT_LABELS_NIVEAUX);
 
         champScoreMoyenNiv3 = new JTextField("-");
-        champScoreMoyenNiv3.setBounds(labelScoreMoyenNiv3.getX() + 135, labelScoreMoyenNiv3.getY() - 2, 20, 15);
+        champScoreMoyenNiv3.setBounds(labelScoreMoyenNiv3.getX() + 135, labelScoreMoyenNiv3.getY() - 2, 40, 15);
         champScoreMoyenNiv3.setBackground(Color.WHITE);
         champScoreMoyenNiv3.setEditable(false);
         champScoreMoyenNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
