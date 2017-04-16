@@ -742,6 +742,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
         if (finPartie) {
             statsNivJeu((Integer) listeDifficulte.getSelectedItem());
+            afficherBoiteDialogConfirm();
         }
     }
     
@@ -754,21 +755,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
                         motCacheAff, motTire.toUpperCase());
                 motCache.setText(motCacheAff);
 
-                if (!motCacheAff.contains(TIRET_BAS_ESP)) {
-                    gagne = JOptionPane.showConfirmDialog(fenetre, "BRAVO ! Vous avez "
-                            + "gagné la partie.\n  Mot caché  :" + motTire
-                                    .toUpperCase() + "\n  Votre score : " + score + "\n"
-                            + "\nVoulez-vous jouer une autre partie ?",
-                            "PARTIE GAGNÉE", JOptionPane.YES_NO_OPTION,
-                            JOptionPane.PLAIN_MESSAGE);
-
-                    if (gagne == JOptionPane.YES_OPTION) {
-                        lettre.requestFocusInWindow();
-                        jouer();
-                    } else {
-                        initVue1();
-                    }
-                }
             } else {
                 score--;
                 affichageScore.setText("" + score);
@@ -792,6 +778,40 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             }
         }
         return motCachePartiel;
+    }
+    
+    private void afficherBoiteDialogConfirm() {
+        //Toutes les lettres du mot sont découvertes l'utilisateur gagne
+        if (!motCache.getText().contains(TIRET_BAS_ESP)) {
+            gagne = JOptionPane.showConfirmDialog(fenetre, "BRAVO ! Vous avez "
+                    + "gagné la partie.\n  Mot caché  :" + motTire
+                            .toUpperCase() + "\n  Votre score : " + score + "\n"
+                    + "\nVoulez-vous jouer une autre partie ?",
+                    "PARTIE GAGNÉE", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.PLAIN_MESSAGE);
+
+            if (gagne == JOptionPane.YES_OPTION) {
+                lettre.requestFocusInWindow();
+                jouer();
+            } else {
+                initVue1();
+            }
+        }
+        
+        //Le score est arrivé à zéro et l'utilisateur perd
+        if (score == 0) {
+            perdu = JOptionPane.showConfirmDialog(fenetre, "Oups! Vous êtes mort.\n  "
+                    + "Mot caché  :" + motTire.toUpperCase() + "\n\n"
+                    + "Voulez-vous jouer une autre partie ?", "PARTIE "
+                    + "PERDUE", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            if (perdu == JOptionPane.YES_OPTION) {
+                lettre.requestFocusInWindow();
+                jouer();
+            } else {
+                initVue1();
+            }
+        }
     }
 
     private int[] compteurNivJeu(int[] compteurNiv, int scorePartie) {
@@ -874,17 +894,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             pendu.setText(PENDU_SIX_ERREURS);
             pendu.setVisible(true);
 
-            perdu = JOptionPane.showConfirmDialog(fenetre, "Oups! Vous êtes mort.\n  "
-                    + "Mot caché  :" + motTire.toUpperCase() + "\n\n"
-                    + "Voulez-vous jouer une autre partie ?", "PARTIE "
-                    + "PERDUE", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-            if (perdu == JOptionPane.YES_OPTION) {
-                lettre.requestFocusInWindow();
-                jouer();
-            } else {
-                initVue1();
-            }
         }
     }
     
