@@ -12,6 +12,7 @@ import javax.swing.*;
 public class JeuPendu extends WindowAdapter implements ActionListener {
 
     //CONSTANTES
+    ////////////
     public static final String ALPHABET
             = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final int LARGEUR = 500;
@@ -86,6 +87,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     public static final int SCORE_MY = SCORE_TOT;
 
     //VARIABLES D'INSTANCE
+    //////////////////////
     private int score = 6; // le nb d'essais effectuée, on pourra se servir de cette variable pour faire les affichage du pendu.
     private int choixCouleurInterface = 0;
     private int choixNiveauDifficulte = 0;
@@ -155,7 +157,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private static String[] partiesNiv1 = {"0", "-", "-"};
     private static String[] partiesNiv2 = {"0", "-", "-"};
     private static String[] partiesNiv3 = {"0", "-", "-"};
-    //Tableau comptant  les parties jouées, gagnées et les scores
+    //Tableau comptant  les parties jouées, gagnées et les scores globaux
     private int[] compteurNiv1 = new int[3];
     private int[] compteurNiv2 = new int[3];
     private int[] compteurNiv3 = new int[3];
@@ -806,10 +808,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private static String[] partiesNivJeu(String[] partiesNiv, int[] compteurNiv) {
         partiesNiv[JOUEES] ="" + compteurNiv[PARTIES];
         if (compteurNiv[PARTIES] > 0) {
-            partiesNiv[PARTIES_GAG] = DEC_FORMAT.format(100.0 
-                    * compteurNiv[PARTIES_GAG] / compteurNiv[PARTIES]) + "%";
-            partiesNiv[SCORE_MY] = DEC_FORMAT.format(100.0 
-                    * compteurNiv[SCORE_TOT] / compteurNiv[PARTIES]);
+            partiesNiv[PARTIES_GAG] = DEC_FORMAT.format(100.0 * compteurNiv
+                   [PARTIES_GAG] / compteurNiv[PARTIES]) + "%";
+            partiesNiv[SCORE_MY] = DEC_FORMAT.format(compteurNiv[SCORE_TOT] 
+                    / compteurNiv[PARTIES]);
         }
         return partiesNiv;
     }
