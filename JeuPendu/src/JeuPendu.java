@@ -9,6 +9,17 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import javax.swing.*;
 
+/**
+ * INF2120
+ * 
+ * Classe java avec interface graphique représentant le jeu du pendu.
+ *
+ * @author Maxime Gagnon et Léopold Aurélien Quenum et Maxime Gagnon
+ * @codePermanent QUEL16107105 GAGM28089106 
+ * @courriel gagnon.maxime.5@courrier.uqam.ca, quenum.leopold_Aurelien@courrier.uqam.ca
+ * @version 18 avril 2017
+ */
+
 public class JeuPendu extends WindowAdapter implements ActionListener {
 
     //CONSTANTES
