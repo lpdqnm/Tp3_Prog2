@@ -944,7 +944,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
 
     /**
-     * 
+     * Gère la validation d'une lettre si celle-ci n'avait pas déjà été entrée 
+     * et vérifie si toutes les lettres ont été découvertes.
      */
     private void resultatPartie() {
         boolean finPartie = resultatLettre(lettre.getText(), motTire);
@@ -954,7 +955,11 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             afficherBoiteDialogConfirm();
         }
     }
-    
+    /**
+     * Ajuste les statistiques en fontion du niveau de difficulte selectionne.
+     * 
+     * @param nivJeu le niveau de difficulte selectionne.
+     */
     private void statsNivJeu(int nivJeu) {
         
         switch(nivJeu) {
@@ -974,7 +979,14 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
                 break;
         }
     }
-    
+    /**
+     * Vérifie si la lettre fait partie du mot caché, ajuste le score en
+     * conséquence.
+     * 
+     * @param lettreChoisie la lettre entrée par l'utilisateur.
+     * @param motTire le mot à découvrir.
+     * @return true si la partie est terminée, false sinon.
+     */
     private boolean resultatLettre(String lettreChoisie, String motTire) {
         String motCacheAff = motCache.getText();
 
@@ -993,6 +1005,17 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         return score == 0 || !motCacheAff.contains(TIRET_BAS_ESP);
     }
 
+    /**
+     * Insère la lettre validée comme étant contenue dans le mot caché à la 
+     * place de son tiret correspondant dans la vue 2.
+     * 
+     * @param lettreChoisieMaj la lettre choisie sous sa forme majuscule.
+     * @param motCache Le mot à découvriravec des tirets aux endroit où les 
+     *                 lettres ne sont pas découvertes.
+     * @param motTireMaj le mot à découvrir sous sa forme majuscule.
+     * @return la nouvelle chaine correspondant au mot caché incluant 
+     *         la lettre decouverte.
+     */
     private String remplacerLettreMotCache(String lettreChoisieMaj,
             String motCache, String motTireMaj) {
         String motCachePartiel = "";
@@ -1009,6 +1032,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         return motCachePartiel;
     }
     
+    /**
+     * Affiche une fenêtre surgissante dépendanmment de l'issue de la partie en
+     * cours.
+     */
     private void afficherBoiteDialogConfirm() {
         //Toutes les lettres du mot sont découvertes l'utilisateur gagne
         if (!motCache.getText().contains(TIRET_BAS_ESP)) {
@@ -1043,6 +1070,14 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         }
     }
 
+    /**
+     * Insère les statistiques obtenues à la fin d'une partie dans un tableau 
+     * dans le but de les affiché dans la vue 3.
+     * 
+     * @param compteurNiv le tableau contenant les statistiques.
+     * @param scorePartie le score final de la partie terminée.
+     * @return le tableau mis à jour.
+     */
     private int[] compteurNivJeu(int[] compteurNiv, int scorePartie) {
         if (compteurNiv != null && compteurNiv.length == 3 && scorePartie >= 0) {
             compteurNiv[PARTIES]++;
@@ -1053,7 +1088,14 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         }
         return compteurNiv;
     }
-    
+    /**
+     * Effectue les manipulations mathématiques afin de généré les statistiques 
+     * finales provenant du tableau de statistiques brutes.
+     * @param partiesNiv le tableau qui contiendra les statistiques finales sous
+     *                   la forme de chaines de caractères
+     * @param compteurNiv le tableau contenant les statistiques brutes.
+     * @return le tableau de statistiques finales mis à jour.
+     */
     private static String[] partiesNivJeu(String[] partiesNiv, int[] compteurNiv) {
         partiesNiv[JOUEES] ="" + compteurNiv[PARTIES];
         if (compteurNiv[PARTIES] > 0) {
@@ -1078,7 +1120,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
 
     /**
-     * 
+     * Ajuste l'affichage du pendu en focntion du score de la partie en cours.
      * 
      * @param score le score obtenu suite à la validation d'une lettre.
      */
@@ -1110,7 +1152,9 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
         }
     }
-    
+    /**
+     * Écrit les statitiques dans le fichier texte.
+     */
     public static void ecrireFichier() {
         PrintWriter out;
 
@@ -1127,6 +1171,16 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         }
     }
 
+    /**
+     * Écrit les statistiques des parties correspondant à un niveau de 
+     * difficulte donne.
+     * 
+     * @param out Le fichier de sortie.
+     * @param partiesNiveau le tableau de statistiques.
+     * @param niv le niveau de difficulte
+     * @throws IOException  s'il y a une erreur d'entrée ou de sortie avec le 
+     *                      fichier texte.
+     */
     public static void ecrireNivFichier(PrintWriter out, 
             String[] partiesNiveau, int niv) throws IOException{
         out.println(NIV + niv);//Le niveau est en entête
@@ -1141,7 +1195,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             out.print("\n\n");
         }
     }
-    
+    /**
+     * Lit les statistique à partir du fichier texte de sauvegarde.
+     * @param ficEntree le fichier de statistiques.
+     */
     public static void lireFichier(String ficEntree) {
         BufferedReader in;
         String entete;
