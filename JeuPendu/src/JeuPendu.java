@@ -849,7 +849,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
                 break;
             case 3:
                 compteurNiv3 = compteurNivJeu(compteurNiv3, score);
-                partiesNiv3 = partiesNivJeu(partiesNiv1, compteurNiv3);
+                partiesNiv3 = partiesNivJeu(partiesNiv3, compteurNiv3);
                 break;
             default:
                 break;
