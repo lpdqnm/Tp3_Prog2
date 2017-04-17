@@ -12,14 +12,13 @@ import javax.swing.*;
 public class JeuPendu extends WindowAdapter implements ActionListener {
 
     //CONSTANTES
-    ////////////
     public static final String ALPHABET
             = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final Integer[] TAB_DIFFICULTE = new Integer[]{1, 2, 3};
     public static final int LARGEUR = 500;
     public static final int HAUTEUR = 510;
     public static final Font FONT_TITRE = new Font("Courier", Font.BOLD, 24);
-    public static final Font FONT_BOUTON = new Font("Courier", Font.PLAIN, 20);
-    public static final Integer[] TAB_DIFFICULTE = new Integer[]{1, 2, 3};
+    public static final Font FONT_BOUTON = new Font("Courier", Font.PLAIN, 20);    
     public static final Font FONT_PENDU = new Font("Courier New",
             Font.PLAIN, 16);
     public static final Font FONT_TITRES_NIVEAUX = new Font("Arial",
@@ -31,48 +30,86 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     public static final Font FONT_MOT_CACHE = new Font("Courier New",
             Font.BOLD, 20);
     public static final Font FONT_SCORE = new Font("Courier", Font.BOLD, 12);
+   
+    
     public static final String TRAIT = "_______________________________________"
             + "____________________________";
+    
+//Contantes représentant les différentes étapes d'affichage du pendu  
+    public static final String PENDU_ZERO_ERREUR = 
+            "              ____________    "
+            + "\n               |        |     " 
+            + "\n               |        |     "
+            + "\n               |                  " 
+            + "\n               |                  "
+            + "\n               |                  " 
+            + "\n               |                  "
+            + "\n             __|__________   " 
+            + "\n          __|_____________|__";
 
-    public static final String PENDU_ZERO_ERREUR = "              ____________    "
-            + "\n               |        |     " + "\n               |        |     "
-            + "\n               |                  " + "\n               |                  "
-            + "\n               |                  " + "\n               |                  "
-            + "\n             __|__________   " + "\n          __|_____________|__";
+    public static final String PENDU_UNE_ERREUR = 
+            "              ____________    "
+            + "\n               |        |     " 
+            + "\n               |        |     "
+            + "\n               |        o         " 
+            + "\n               |                  "
+            + "\n               |                  " 
+            + "\n               |                  "
+            + "\n             __|__________   " 
+            + "\n          __|_____________|__";
 
-    public static final String PENDU_UNE_ERREUR = "              ____________    "
-            + "\n               |        |     " + "\n               |        |     "
-            + "\n               |        o         " + "\n               |                  "
-            + "\n               |                  " + "\n               |                  "
-            + "\n             __|__________   " + "\n          __|_____________|__";
+    public static final String PENDU_DEUX_ERREURS = 
+            "              ____________    "
+            + "\n               |        |     " 
+            + "\n               |        |     "
+            + "\n               |        o         " 
+            + "\n               |        |         "
+            + "\n               |                  "
+            + "\n               |                  "
+            + "\n             __|__________   " 
+            + "\n          __|_____________|__";
+    public static final String PENDU_TROIS_ERREURS = 
+            "              ____________    "
+            + "\n               |        |     " 
+            + "\n               |        |     "
+            + "\n               |        o         " 
+            + "\n               |       /|         "
+            + "\n               |                  " 
+            + "\n               |                  "
+            + "\n             __|__________   " 
+            + "\n          __|_____________|__";
+    public static final String PENDU_QUATRE_ERREURS = 
+            "              ____________    "
+            + "\n               |        |     " 
+            + "\n               |        |     "
+            + "\n               |        o         " 
+            + "\n               |       /|\\        "
+            + "\n               |                  " 
+            + "\n               |                  "
+            + "\n             __|__________   " 
+            + "\n          __|_____________|__";
+    public static final String PENDU_CINQ_ERREURS = 
+            "              ____________    "
+            + "\n               |        |     " 
+            + "\n               |        |     "
+            + "\n               |        o         " 
+            + "\n               |       /|\\        "
+            + "\n               |       /          " 
+            + "\n               |                  "
+            + "\n             __|__________   " 
+            + "\n          __|_____________|__";
+    public static final String PENDU_SIX_ERREURS = 
+            "              ____________    "
+            + "\n               |        |     " 
+            + "\n               |        |     "
+            + "\n               |        o         " 
+            + "\n               |       /|\\        "
+            + "\n               |       / \\         " 
+            + "\n               |                  "
+            + "\n             __|__________   " 
+            + "\n          __|_____________|__";
 
-    public static final String PENDU_DEUX_ERREURS = "              ____________    "
-            + "\n               |        |     " + "\n               |        |     "
-            + "\n               |        o         " + "\n               |        |         "
-            + "\n               |                  " + "\n               |                  "
-            + "\n             __|__________   " + "\n          __|_____________|__";
-    public static final String PENDU_TROIS_ERREURS = "              ____________    "
-            + "\n               |        |     " + "\n               |        |     "
-            + "\n               |        o         " + "\n               |       /|         "
-            + "\n               |                  " + "\n               |                  "
-            + "\n             __|__________   " + "\n          __|_____________|__";
-    public static final String PENDU_QUATRE_ERREURS = "              ____________    "
-            + "\n               |        |     " + "\n               |        |     "
-            + "\n               |        o         " + "\n               |       /|\\        "
-            + "\n               |                  " + "\n               |                  "
-            + "\n             __|__________   " + "\n          __|_____________|__";
-    public static final String PENDU_CINQ_ERREURS = "              ____________    "
-            + "\n               |        |     " + "\n               |        |     "
-            + "\n               |        o         " + "\n               |       /|\\        "
-            + "\n               |       /          " + "\n               |                  "
-            + "\n             __|__________   " + "\n          __|_____________|__";
-    public static final String PENDU_SIX_ERREURS = "              ____________    "
-            + "\n               |        |     " + "\n               |        |     "
-            + "\n               |        o         " + "\n               |       /|\\        "
-            + "\n               |       / \\         " + "\n               |                  "
-            + "\n             __|__________   " + "\n          __|_____________|__";
-
-    //Chaines pour le fichier des statistiques
+    //Constantes pour le fichier des statistiques
     public static final String NIV = "Niveau ";
     
     public static final String FIC_STATS = "statistiques.txt";
@@ -88,7 +125,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     //VARIABLES D'INSTANCE
     //////////////////////
-    private int score = 6; // le nb d'essais effectuée, on pourra se servir de cette variable pour faire les affichage du pendu.
+    private int score = 6; 
     private int choixCouleurInterface = 0;
     private int choixNiveauDifficulte = 0;
     private String motTire = "";//contiendra le mot tire pour chaques partie 
@@ -104,7 +141,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JLabel titre;
     private JButton boutonJouer;
     private JButton boutonStats;
-
+    
+    //Vue 2:
     private JPanel panelVue2;
     private JPanel panneauOptions;
     private JLabel difficulte;
@@ -123,7 +161,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JTextField lettre;
     private JButton boutonSoumettre;
     private JButton boutonQuitter;
-
+    
+    //Vue 3:
     private JPanel panelVue3;
     private JLabel titreStats;
     private JLabel titreStatsNiv1;
@@ -151,21 +190,34 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private JTextField champPartiesGagneesNiv3;
     private JTextField champScoreMoyenNiv3;
     private JButton boutonFermerStats;
-
     
     //Tableaux des statistiques
     private static String[] partiesNiv1 = {"0", "-", "-"};
     private static String[] partiesNiv2 = {"0", "-", "-"};
     private static String[] partiesNiv3 = {"0", "-", "-"};
+    
     //Tableau comptant  les parties jouées, gagnées et les scores globaux
     private int[] compteurNiv1 = new int[3];
     private int[] compteurNiv2 = new int[3];
     private int[] compteurNiv3 = new int[3];
 
+    
+    
+    
+    //Code du programme principal
+
+    /**
+     *Constructeur principal sans arguments qui initialise la fenêtre principale
+     * avant d'afficher la vue 1.
+     */
+    
     public JeuPendu() {
         initFenetre();
     }
-
+    
+    /**
+     *Initialise la fenêtre principale.
+     */
     private void initFenetre() {
 
         fenetre = new JFrame("JEU DU PENDU");
@@ -180,7 +232,11 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         initVue1();
 
     }
-
+    
+    /**
+     *Initialisation du conteneur de la vue 1 contenant le titre du programme,
+     * un bouton «jouer» et un bouton «Statistiques».
+     */
     private void initVue1() {
         cacherPanneauxVue1();
 
@@ -195,15 +251,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         boutonJouer.addActionListener(this);
         boutonStats.addActionListener(this);
     }
-
-    private void ajoutElementsVue1() {
-        panelVue1.add(titre);
-        panelVue1.add(boutonJouer);
-        panelVue1.add(boutonStats);
-        fenetre.getContentPane().add(panelVue1);
-        panelVue1.setVisible(true);
-    }
-
+    /**
+     *Initialise les éléments contenus dans le conteneur de la vue 1, soit 
+     * le titre du programme, un bouton «jouer» et un bouton «Statistiques».
+     */
     private void initElementsVue1() {
         titre = new JLabel("Le jeu du pendu");
         titre.setBounds(0, 0, LARGEUR, HAUTEUR / 3);
@@ -221,7 +272,22 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         boutonStats.setFont(FONT_BOUTON);
         boutonStats.setHorizontalAlignment(SwingConstants.CENTER);
     }
+    
+    /**
+     *Ajoute  le titre du programme, un bouton «jouer» et un bouton 
+     * «Statistiques» au conteneur de la vue 1.
+     */
+    private void ajoutElementsVue1() {
+        panelVue1.add(titre);
+        panelVue1.add(boutonJouer);
+        panelVue1.add(boutonStats);
+        fenetre.getContentPane().add(panelVue1);
+        panelVue1.setVisible(true);
+    }
 
+    /**
+     *Cache les autres vues en vue de l'affichage de la vue 1.
+     */
     private void cacherPanneauxVue1() {
         if (panelVue2 != null) {
             panelVue2.setVisible(false);
@@ -230,7 +296,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             panelVue3.setVisible(false);
         }
     }
-
+    
+    /**
+     * Initialise le panneau de la vue2 représentant le jeu du pendu.
+     */
     private void initVue2() {
 
         cacherPanneauxVue2();
@@ -257,65 +326,12 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         panelVue2.setVisible(true);
 
     }
-
-    private void attributionActionListenersVue2() {
-        interfaceClaire.addActionListener(this);
-        listeDifficulte.addActionListener(this);
-        interfaceSombre.addActionListener(this);
-        boutonSoumettre.addActionListener(this);
-        boutonQuitter.addActionListener(this);
-        lettre.addActionListener(this);
-    }
-
-    private void ajoutElementsVue2() {
-        panelVue2.add(panneauOptions);
-        panneauOptions.add(difficulte);
-        panneauOptions.add(listeDifficulte);
-        panneauOptions.add(couleurInterface);
-        panneauOptions.add(interfaceClaire);
-        panneauOptions.add(interfaceSombre);
-        panelVue2.add(pendu);
-        panelVue2.add(labelScore);
-        panelVue2.add(affichageScore);
-        panelVue2.add(ligneSeparation);
-        panelVue2.add(labelMotCache);
-        panelVue2.add(motCache);
-        panelVue2.add(labelLettre);
-        panelVue2.add(lettre);
-        panelVue2.add(boutonSoumettre);
-        panelVue2.add(boutonQuitter);
-        fenetre.getContentPane().add(panelVue2);
-    }
-
-    private void initElementsPartieInferieureVue2() {
-        ligneSeparation = new JTextField(TRAIT);
-        ligneSeparation.setBounds(pendu.getX(), labelScore.getY() + 25, pendu.getWidth(), labelScore.getHeight() + 10);
-        ligneSeparation.setBackground(Color.WHITE);
-        ligneSeparation.setEditable(false);
-        ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        
-        labelMotCache = new JLabel("MOT CACHÉ");
-        labelMotCache.setBounds(ligneSeparation.getX(), ligneSeparation.getY() + 40, labelScore.getWidth()+10, labelScore.getHeight());
-        
-        motCache = new JTextField("");
-        motCache.setBounds(labelMotCache.getX() + 100, labelMotCache.getY() - 10, 350, labelMotCache.getHeight() + 20);
-        motCache.setEditable(false);
-        motCache.setFont(FONT_MOT_CACHE);
-        
-        labelLettre = new JLabel("LETTRE");
-        labelLettre.setBounds(labelMotCache.getX(), labelMotCache.getY() + 50, 60, motCache.getHeight());
-        
-        lettre = new JTextField();
-        lettre.setBounds(labelLettre.getX() + 70, labelLettre.getY(), 40, motCache.getHeight());
-        lettre.setFont(FONT_SAISIE_LETTRE);
-        
-        boutonSoumettre = new JButton("Soumettre");
-        boutonSoumettre.setBounds(lettre.getX() + 60, lettre.getY() + 8, 95, motCache.getHeight() - 10);
-        
-        boutonQuitter = new JButton("Quitter");
-        boutonQuitter.setBounds(lettre.getX() + 300, lettre.getY() + 8, 75, motCache.getHeight() - 10);
-    }
-
+    
+    /**
+     * Initialise les éléments contenus dans la partie supérieure du conteneur 
+     * de la vue 2 , soit le panneau d'options et l'affichage du pendu.
+     * 
+     */
     private void initElementsPartieSuperieureVue2() {
         panneauOptions = new JPanel(null);
         panneauOptions.setBounds(17, 20, fenetre.getWidth() - 50, 85);
@@ -366,7 +382,81 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         affichageScore.setFont(labelScore.getFont());
         affichageScore.setBorder(BorderFactory.createLineBorder(Color.WHITE));
     }
+    
+    /**
+     * Initialise les éléments contenus dans la partie inférieure du conteneur 
+     * de la vue 2 , soit le mot caché, l'entrée de la lettre, le mot caché, le 
+     * bouton de soumission et un bouton pour quitter la vue 2.
+     */
+     private void initElementsPartieInferieureVue2() {
+        ligneSeparation = new JTextField(TRAIT);
+        ligneSeparation.setBounds(pendu.getX(), labelScore.getY() + 25, pendu.getWidth(), labelScore.getHeight() + 10);
+        ligneSeparation.setBackground(Color.WHITE);
+        ligneSeparation.setEditable(false);
+        ligneSeparation.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        
+        labelMotCache = new JLabel("MOT CACHÉ");
+        labelMotCache.setBounds(ligneSeparation.getX(), ligneSeparation.getY() + 40, labelScore.getWidth()+10, labelScore.getHeight());
+        
+        motCache = new JTextField("");
+        motCache.setBounds(labelMotCache.getX() + 100, labelMotCache.getY() - 10, 350, labelMotCache.getHeight() + 20);
+        motCache.setEditable(false);
+        motCache.setFont(FONT_MOT_CACHE);
+        
+        labelLettre = new JLabel("LETTRE");
+        labelLettre.setBounds(labelMotCache.getX(), labelMotCache.getY() + 50, 60, motCache.getHeight());
+        
+        lettre = new JTextField();
+        lettre.setBounds(labelLettre.getX() + 70, labelLettre.getY(), 40, motCache.getHeight());
+        lettre.setFont(FONT_SAISIE_LETTRE);
+        
+        boutonSoumettre = new JButton("Soumettre");
+        boutonSoumettre.setBounds(lettre.getX() + 60, lettre.getY() + 8, 95, motCache.getHeight() - 10);
+        
+        boutonQuitter = new JButton("Quitter");
+        boutonQuitter.setBounds(lettre.getX() + 300, lettre.getY() + 8, 75, motCache.getHeight() - 10);
+    }
+    
+     /**
+      * Ajout des éléments contenus dans la partie supérieur et inférieure de la
+      * vue 2 au panneau de la vue 2.
+      */
+    private void ajoutElementsVue2() {
+        panelVue2.add(panneauOptions);
+        panneauOptions.add(difficulte);
+        panneauOptions.add(listeDifficulte);
+        panneauOptions.add(couleurInterface);
+        panneauOptions.add(interfaceClaire);
+        panneauOptions.add(interfaceSombre);
+        panelVue2.add(pendu);
+        panelVue2.add(labelScore);
+        panelVue2.add(affichageScore);
+        panelVue2.add(ligneSeparation);
+        panelVue2.add(labelMotCache);
+        panelVue2.add(motCache);
+        panelVue2.add(labelLettre);
+        panelVue2.add(lettre);
+        panelVue2.add(boutonSoumettre);
+        panelVue2.add(boutonQuitter);
+        fenetre.getContentPane().add(panelVue2);
+    }
+    
+    /**
+     * Organise la capture d'événements dans la vue 2 représentant le jeu du
+     * pendu.
+     */
+    private void attributionActionListenersVue2() {
+        interfaceClaire.addActionListener(this);
+        listeDifficulte.addActionListener(this);
+        interfaceSombre.addActionListener(this);
+        boutonSoumettre.addActionListener(this);
+        boutonQuitter.addActionListener(this);
+        lettre.addActionListener(this);
+    }
 
+    /**
+     *Cache les autres vues en vue de l'affichage de la vue 2.
+     */
     private void cacherPanneauxVue2() {
         if (panelVue1 != null) {
             panelVue1.setVisible(false);
@@ -375,7 +465,11 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             panelVue3.setVisible(false);
         }
     }
-
+    
+    /**
+     * Initialise le panneau de la vue 3 représentant l'affichage des 
+     * statistiques.
+     */
     private void initVue3() {
         cacherPanneauxVue3();
 
@@ -405,127 +499,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
         initVue3Claire();
     }
-
-    private void ajoutElementsVue3() {
-        fenetre.getContentPane().add(panelVue3);
-        panelVue3.add(titreStats);
-        panelVue3.add(titreStatsNiv1);
-        panelVue3.add(panneauStatsNiv1);
-        panneauStatsNiv1.add(labelPartiesJoueesNiv1);
-        panneauStatsNiv1.add(champPartiesJoueesNiv1);
-        panneauStatsNiv1.add(labelPartiesGagneesNiv1);
-        panneauStatsNiv1.add(champPartiesGagneesNiv1);
-        panneauStatsNiv1.add(labelScoreMoyenNiv1);
-        panneauStatsNiv1.add(champScoreMoyenNiv1);
-        panelVue3.add(titreStatsNiv2);
-        panelVue3.add(panneauStatsNiv2);
-        panneauStatsNiv2.add(labelPartiesJoueesNiv2);
-        panneauStatsNiv2.add(champPartiesJoueesNiv2);
-        panneauStatsNiv2.add(labelPartiesGagneesNiv2);
-        panneauStatsNiv2.add(champPartiesGagneesNiv2);
-        panneauStatsNiv2.add(labelScoreMoyenNiv2);
-        panneauStatsNiv2.add(champScoreMoyenNiv2);
-        panelVue3.add(titreStatsNiv3);
-        panelVue3.add(panneauStatsNiv3);
-        panneauStatsNiv3.add(labelPartiesJoueesNiv3);
-        panneauStatsNiv3.add(champPartiesJoueesNiv3);
-        panneauStatsNiv3.add(labelPartiesGagneesNiv3);
-        panneauStatsNiv3.add(champPartiesGagneesNiv3);
-        panneauStatsNiv3.add(labelScoreMoyenNiv3);
-        panneauStatsNiv3.add(champScoreMoyenNiv3);
-        panelVue3.add(boutonFermerStats);
-    }
-
-    private void initStatistiquesNiveau3() {
-        titreStatsNiv3 = new JLabel("Parties de niveau 3");
-        titreStatsNiv3.setBounds(panneauStatsNiv2.getX(), panneauStatsNiv2.getY() + 100, 135, 20);
-        titreStatsNiv3.setFont(FONT_TITRES_NIVEAUX);
-        
-        panneauStatsNiv3 = new JPanel(null);
-        panneauStatsNiv3.setBounds(panneauStatsNiv2.getX(), titreStatsNiv3.getY() + 17, panelVue3.getWidth() - 50, 80);
-        panneauStatsNiv3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        panneauStatsNiv3.setBackground(Color.WHITE);
-        panneauStatsNiv3.setVisible(true);
-        
-        labelPartiesJoueesNiv3 = new JLabel("Parties jouées : ");
-        labelPartiesJoueesNiv3.setBounds(panneauStatsNiv3.getX(), panneauStatsNiv3.getX() - 5, 130, 12);
-        labelPartiesJoueesNiv3.setFont(FONT_LABELS_NIVEAUX);
-        
-        champPartiesJoueesNiv3 = new JTextField("0");
-        champPartiesJoueesNiv3.setBounds(labelPartiesJoueesNiv3.getX() + 135, labelPartiesJoueesNiv3.getY() - 2, 50, 15);
-        champPartiesJoueesNiv3.setBackground(Color.WHITE);
-        champPartiesJoueesNiv3.setEditable(false);
-        champPartiesJoueesNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        champPartiesJoueesNiv3.setFont(FONT_LABELS_NIVEAUX);
-        
-        labelPartiesGagneesNiv3 = new JLabel("Parties gagnées : ");
-        labelPartiesGagneesNiv3.setBounds(labelPartiesGagneesNiv3.getX() + 15, labelPartiesGagneesNiv3.getY() + 33, 130, 12);
-        labelPartiesGagneesNiv3.setFont(FONT_LABELS_NIVEAUX);
-        
-        champPartiesGagneesNiv3 = new JTextField("-");
-        champPartiesGagneesNiv3.setBounds(labelPartiesGagneesNiv3.getX() + 135, labelPartiesGagneesNiv3.getY() - 2, 50, 15);
-        champPartiesGagneesNiv3.setBackground(Color.WHITE);
-        champPartiesGagneesNiv3.setEditable(false);
-        champPartiesGagneesNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        champPartiesGagneesNiv3.setFont(FONT_LABELS_NIVEAUX);
-        
-        labelScoreMoyenNiv3 = new JLabel("Score Moyen : ");
-        labelScoreMoyenNiv3.setBounds(labelPartiesGagneesNiv3.getX(), labelPartiesGagneesNiv3.getY() + 22, 130, 12);
-        labelScoreMoyenNiv3.setFont(FONT_LABELS_NIVEAUX);
-        
-        champScoreMoyenNiv3 = new JTextField("-");
-        champScoreMoyenNiv3.setBounds(labelScoreMoyenNiv3.getX() + 135, labelScoreMoyenNiv3.getY() - 2, 50, 15);
-        champScoreMoyenNiv3.setBackground(Color.WHITE);
-        champScoreMoyenNiv3.setEditable(false);
-        champScoreMoyenNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        champScoreMoyenNiv3.setFont(FONT_LABELS_NIVEAUX);
-    }
-
-    private void initStatistiquesNiveau2() {
-        titreStatsNiv2 = new JLabel("Parties de niveau 2");
-        titreStatsNiv2.setBounds(panneauStatsNiv1.getX(), panneauStatsNiv1.getY() + 100, 135, 20);
-        titreStatsNiv2.setFont(FONT_TITRES_NIVEAUX);
-        
-        panneauStatsNiv2 = new JPanel(null);
-        panneauStatsNiv2.setBounds(panneauStatsNiv1.getX(), titreStatsNiv2.getY() + 17, panelVue3.getWidth() - 50, 80);
-        panneauStatsNiv2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        panneauStatsNiv2.setBackground(Color.WHITE);
-        panneauStatsNiv2.setVisible(true);
-        
-        labelPartiesJoueesNiv2 = new JLabel("Parties jouées : ");
-        labelPartiesJoueesNiv2.setBounds(panneauStatsNiv2.getX(), panneauStatsNiv2.getX() - 5, 130, 12);
-        labelPartiesJoueesNiv2.setFont(FONT_LABELS_NIVEAUX);
-        
-        champPartiesJoueesNiv2 = new JTextField("0");
-        champPartiesJoueesNiv2.setBounds(labelPartiesJoueesNiv2.getX() + 135, labelPartiesJoueesNiv2.getY() - 2, 50, 15);
-        champPartiesJoueesNiv2.setBackground(Color.WHITE);
-        champPartiesJoueesNiv2.setEditable(false);
-        champPartiesJoueesNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        champPartiesJoueesNiv2.setFont(FONT_LABELS_NIVEAUX);
-        
-        labelPartiesGagneesNiv2 = new JLabel("Parties gagnées : ");
-        labelPartiesGagneesNiv2.setBounds(labelPartiesGagneesNiv2.getX() + 15, labelPartiesGagneesNiv2.getY() + 33, 130, 12);
-        labelPartiesGagneesNiv2.setFont(FONT_LABELS_NIVEAUX);
-        
-        champPartiesGagneesNiv2 = new JTextField("-");
-        champPartiesGagneesNiv2.setBounds(labelPartiesGagneesNiv2.getX() + 135, labelPartiesGagneesNiv2.getY() - 2, 50, 15);
-        champPartiesGagneesNiv2.setBackground(Color.WHITE);
-        champPartiesGagneesNiv2.setEditable(false);
-        champPartiesGagneesNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        champPartiesGagneesNiv2.setFont(FONT_LABELS_NIVEAUX);
-        
-        labelScoreMoyenNiv2 = new JLabel("Score Moyen : ");
-        labelScoreMoyenNiv2.setBounds(labelPartiesGagneesNiv2.getX(), labelPartiesGagneesNiv2.getY() + 22, 130, 12);
-        labelScoreMoyenNiv2.setFont(FONT_LABELS_NIVEAUX);
-        
-        champScoreMoyenNiv2 = new JTextField("-");
-        champScoreMoyenNiv2.setBounds(labelScoreMoyenNiv2.getX() + 135, labelScoreMoyenNiv2.getY() - 2, 50, 15);
-        champScoreMoyenNiv2.setBackground(Color.WHITE);
-        champScoreMoyenNiv2.setEditable(false);
-        champScoreMoyenNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        champScoreMoyenNiv2.setFont(FONT_LABELS_NIVEAUX);
-    }
-
+    /**
+     * Initialise le panneau contenant les statistiques pour les parties jouée 
+     * au niveau de difficulté 1.
+     */
     private void initStatistiquesNiveau1() {
         titreStatsNiv1 = new JLabel("Parties de niveau 1");
         titreStatsNiv1.setBounds(titreStats.getX() + 15, titreStats.getY() + 100, 135, 20);
@@ -570,7 +547,140 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         champScoreMoyenNiv1.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         champScoreMoyenNiv1.setFont(FONT_LABELS_NIVEAUX);
     }
-
+    
+    /**
+     * Initialise le panneau contenant les statistiques pour les parties jouée 
+     * au niveau de difficulté 2.
+     */
+    private void initStatistiquesNiveau2() {
+        titreStatsNiv2 = new JLabel("Parties de niveau 2");
+        titreStatsNiv2.setBounds(panneauStatsNiv1.getX(), panneauStatsNiv1.getY() + 100, 135, 20);
+        titreStatsNiv2.setFont(FONT_TITRES_NIVEAUX);
+        
+        panneauStatsNiv2 = new JPanel(null);
+        panneauStatsNiv2.setBounds(panneauStatsNiv1.getX(), titreStatsNiv2.getY() + 17, panelVue3.getWidth() - 50, 80);
+        panneauStatsNiv2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panneauStatsNiv2.setBackground(Color.WHITE);
+        panneauStatsNiv2.setVisible(true);
+        
+        labelPartiesJoueesNiv2 = new JLabel("Parties jouées : ");
+        labelPartiesJoueesNiv2.setBounds(panneauStatsNiv2.getX(), panneauStatsNiv2.getX() - 5, 130, 12);
+        labelPartiesJoueesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesJoueesNiv2 = new JTextField("0");
+        champPartiesJoueesNiv2.setBounds(labelPartiesJoueesNiv2.getX() + 135, labelPartiesJoueesNiv2.getY() - 2, 50, 15);
+        champPartiesJoueesNiv2.setBackground(Color.WHITE);
+        champPartiesJoueesNiv2.setEditable(false);
+        champPartiesJoueesNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesJoueesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
+        labelPartiesGagneesNiv2 = new JLabel("Parties gagnées : ");
+        labelPartiesGagneesNiv2.setBounds(labelPartiesGagneesNiv2.getX() + 15, labelPartiesGagneesNiv2.getY() + 33, 130, 12);
+        labelPartiesGagneesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesGagneesNiv2 = new JTextField("-");
+        champPartiesGagneesNiv2.setBounds(labelPartiesGagneesNiv2.getX() + 135, labelPartiesGagneesNiv2.getY() - 2, 50, 15);
+        champPartiesGagneesNiv2.setBackground(Color.WHITE);
+        champPartiesGagneesNiv2.setEditable(false);
+        champPartiesGagneesNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesGagneesNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
+        labelScoreMoyenNiv2 = new JLabel("Score Moyen : ");
+        labelScoreMoyenNiv2.setBounds(labelPartiesGagneesNiv2.getX(), labelPartiesGagneesNiv2.getY() + 22, 130, 12);
+        labelScoreMoyenNiv2.setFont(FONT_LABELS_NIVEAUX);
+        
+        champScoreMoyenNiv2 = new JTextField("-");
+        champScoreMoyenNiv2.setBounds(labelScoreMoyenNiv2.getX() + 135, labelScoreMoyenNiv2.getY() - 2, 50, 15);
+        champScoreMoyenNiv2.setBackground(Color.WHITE);
+        champScoreMoyenNiv2.setEditable(false);
+        champScoreMoyenNiv2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champScoreMoyenNiv2.setFont(FONT_LABELS_NIVEAUX);
+    }
+    
+    /**
+     * Initialise le panneau contenant les statistiques pour les parties jouée 
+     * au niveau de difficulté 3.
+     */
+    private void initStatistiquesNiveau3() {
+        titreStatsNiv3 = new JLabel("Parties de niveau 3");
+        titreStatsNiv3.setBounds(panneauStatsNiv2.getX(), panneauStatsNiv2.getY() + 100, 135, 20);
+        titreStatsNiv3.setFont(FONT_TITRES_NIVEAUX);
+        
+        panneauStatsNiv3 = new JPanel(null);
+        panneauStatsNiv3.setBounds(panneauStatsNiv2.getX(), titreStatsNiv3.getY() + 17, panelVue3.getWidth() - 50, 80);
+        panneauStatsNiv3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panneauStatsNiv3.setBackground(Color.WHITE);
+        panneauStatsNiv3.setVisible(true);
+        
+        labelPartiesJoueesNiv3 = new JLabel("Parties jouées : ");
+        labelPartiesJoueesNiv3.setBounds(panneauStatsNiv3.getX(), panneauStatsNiv3.getX() - 5, 130, 12);
+        labelPartiesJoueesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesJoueesNiv3 = new JTextField("0");
+        champPartiesJoueesNiv3.setBounds(labelPartiesJoueesNiv3.getX() + 135, labelPartiesJoueesNiv3.getY() - 2, 50, 15);
+        champPartiesJoueesNiv3.setBackground(Color.WHITE);
+        champPartiesJoueesNiv3.setEditable(false);
+        champPartiesJoueesNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesJoueesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+        labelPartiesGagneesNiv3 = new JLabel("Parties gagnées : ");
+        labelPartiesGagneesNiv3.setBounds(labelPartiesGagneesNiv3.getX() + 15, labelPartiesGagneesNiv3.getY() + 33, 130, 12);
+        labelPartiesGagneesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+        champPartiesGagneesNiv3 = new JTextField("-");
+        champPartiesGagneesNiv3.setBounds(labelPartiesGagneesNiv3.getX() + 135, labelPartiesGagneesNiv3.getY() - 2, 50, 15);
+        champPartiesGagneesNiv3.setBackground(Color.WHITE);
+        champPartiesGagneesNiv3.setEditable(false);
+        champPartiesGagneesNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champPartiesGagneesNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+        labelScoreMoyenNiv3 = new JLabel("Score Moyen : ");
+        labelScoreMoyenNiv3.setBounds(labelPartiesGagneesNiv3.getX(), labelPartiesGagneesNiv3.getY() + 22, 130, 12);
+        labelScoreMoyenNiv3.setFont(FONT_LABELS_NIVEAUX);
+        
+        champScoreMoyenNiv3 = new JTextField("-");
+        champScoreMoyenNiv3.setBounds(labelScoreMoyenNiv3.getX() + 135, labelScoreMoyenNiv3.getY() - 2, 50, 15);
+        champScoreMoyenNiv3.setBackground(Color.WHITE);
+        champScoreMoyenNiv3.setEditable(false);
+        champScoreMoyenNiv3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        champScoreMoyenNiv3.setFont(FONT_LABELS_NIVEAUX);
+    }
+    /**
+     * Ajoute les éléments contenus dans la vue 3 au panneau des statistiques.
+     */
+     private void ajoutElementsVue3() {
+        fenetre.getContentPane().add(panelVue3);
+        panelVue3.add(titreStats);
+        panelVue3.add(titreStatsNiv1);
+        panelVue3.add(panneauStatsNiv1);
+        panneauStatsNiv1.add(labelPartiesJoueesNiv1);
+        panneauStatsNiv1.add(champPartiesJoueesNiv1);
+        panneauStatsNiv1.add(labelPartiesGagneesNiv1);
+        panneauStatsNiv1.add(champPartiesGagneesNiv1);
+        panneauStatsNiv1.add(labelScoreMoyenNiv1);
+        panneauStatsNiv1.add(champScoreMoyenNiv1);
+        panelVue3.add(titreStatsNiv2);
+        panelVue3.add(panneauStatsNiv2);
+        panneauStatsNiv2.add(labelPartiesJoueesNiv2);
+        panneauStatsNiv2.add(champPartiesJoueesNiv2);
+        panneauStatsNiv2.add(labelPartiesGagneesNiv2);
+        panneauStatsNiv2.add(champPartiesGagneesNiv2);
+        panneauStatsNiv2.add(labelScoreMoyenNiv2);
+        panneauStatsNiv2.add(champScoreMoyenNiv2);
+        panelVue3.add(titreStatsNiv3);
+        panelVue3.add(panneauStatsNiv3);
+        panneauStatsNiv3.add(labelPartiesJoueesNiv3);
+        panneauStatsNiv3.add(champPartiesJoueesNiv3);
+        panneauStatsNiv3.add(labelPartiesGagneesNiv3);
+        panneauStatsNiv3.add(champPartiesGagneesNiv3);
+        panneauStatsNiv3.add(labelScoreMoyenNiv3);
+        panneauStatsNiv3.add(champScoreMoyenNiv3);
+        panelVue3.add(boutonFermerStats);
+    }
+     
+    /**
+     *Cache les autres vues en vue de l'affichage de la vue 3.
+     */ 
     private void cacherPanneauxVue3() {
         if (panelVue1 != null) {
             panelVue1.setVisible(false);
@@ -579,7 +689,15 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             panelVue2.setVisible(false);
         }
     }
-
+    
+    /**
+     * Capture et interprètes les événements produits par les divers élements du
+     * programmme afin de générer l'effet voulu en fonction de l'élément étant à
+     * l'origine de l'événement.
+     * 
+     * @param evenement l'événement capturés par les ActionListeners des
+     *                  différentes vues
+     */
     @Override
     public void actionPerformed(ActionEvent evenement) {
 
@@ -594,21 +712,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             initVue1();
 
         } else if (evenement.getSource() == listeDifficulte) {
-            if (listeDifficulte.getSelectedIndex() == 0) {
-                this.choixNiveauDifficulte = 0;
-                lettre.requestFocusInWindow();
-                jouer();
-
-            } else if (listeDifficulte.getSelectedIndex() == 1) {
-                this.choixNiveauDifficulte = 1;
-                lettre.requestFocusInWindow();
-                jouer();
-
-            } else {
-                this.choixNiveauDifficulte = 2;
-                lettre.requestFocusInWindow();
-                jouer();
-            }
+            setDifficulte();
         } else if (evenement.getSource() == boutonFermerStats) {
             initVue1();
         } else if (evenement.getSource() == interfaceClaire) {
@@ -619,27 +723,67 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             initVue2Sombre();
         } else if (evenement.getSource() == boutonSoumettre || evenement.getSource() == lettre) {
 
-            if (lettre.getText().length() != 1 || !ALPHABET.contains(lettre.getText())) {
-                JOptionPane.showMessageDialog(panelVue2, "Vous devez entrer une lettre non accentuée!", "ERREUR", JOptionPane.WARNING_MESSAGE);
-                lettre.requestFocusInWindow();
-            } else if (motCache.getText().contains(lettre.getText()
-                    .toUpperCase())) {
-                JOptionPane.showMessageDialog(fenetre, "Cette lettre est déjà"
-                        + " décourverte", "Message", JOptionPane.WARNING_MESSAGE);
-                lettre.requestFocusInWindow();
-            } else {
-                resultatPartie();
-                lettre.requestFocusInWindow();
-            }
-            lettre.setText("");
-            lettre.requestFocusInWindow();
+            analyseLettreEntree();
 
         } else if (Integer.parseInt(affichageScore.getText()) == 0) {
             JOptionPane.showMessageDialog(panelVue2, "Bravo! Vous avez gagné la partie!", "PARTIE GAGNÉE", JOptionPane.PLAIN_MESSAGE);
         }
 
     }
+    
+    /**
+     * Analyse le caractère entré dans le champe demandant une lettre à
+     * l'utilisateur et, s'il est valide, on vérifie si la lettre entrée est 
+     * contenue dans le mot caché.
+     * 
+     * @throws HeadlessException  Si l'environnement exécutant est appelé dans 
+     *                            un contexte où il est dépendant d'un matériel 
+     *                            ou d'un affichage qui n'est pas supporté. 
+     */
+    private void analyseLettreEntree() throws HeadlessException {
+        if (lettre.getText().length() != 1 || !ALPHABET.contains(lettre.getText())) {
+            JOptionPane.showMessageDialog(panelVue2, "Vous devez entrer une lettre non accentuée!", "ERREUR", JOptionPane.WARNING_MESSAGE);
+            lettre.requestFocusInWindow();
+        } else if (motCache.getText().contains(lettre.getText()
+                .toUpperCase())) {
+            JOptionPane.showMessageDialog(fenetre, "Cette lettre est déjà"
+                    + " décourverte", "Message", JOptionPane.WARNING_MESSAGE);
+            lettre.requestFocusInWindow();
+        } else {
+            resultatPartie();
+            lettre.requestFocusInWindow();
+        }
+        lettre.setText("");
+        lettre.requestFocusInWindow();
+    }
 
+    /**
+     * Ajuste le niveau de difficulte en fonction du bouton radio selectionne 
+     * dans la vue 2.
+     */
+    private void setDifficulte() {
+        if (listeDifficulte.getSelectedIndex() == 0) {
+            this.choixNiveauDifficulte = 0;
+            lettre.requestFocusInWindow();
+            jouer();
+            
+        } else if (listeDifficulte.getSelectedIndex() == 1) {
+            this.choixNiveauDifficulte = 1;
+            lettre.requestFocusInWindow();
+            jouer();
+            
+        } else {
+            this.choixNiveauDifficulte = 2;
+            lettre.requestFocusInWindow();
+            jouer();
+        }
+    }
+    
+    /**
+     * Réinitialise les éléments de la vue 2 pour qu'ils soient conformes à la 
+     * vue claire lorsque cette vue est choisie dans les boutons radio de la vue
+     * 2.
+     */
     private void initVue2Claire() {
         panelVue2.setBackground(Color.WHITE);
         difficulte.setBackground(Color.WHITE);
@@ -677,6 +821,11 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     }
 
+    /**
+     * Réinitialise les éléments de la vue 2 pour qu'ils soient conformes à la 
+     * vue sombre lorsque cette vue est choisie dans les boutons radio de la vue
+     * 2.
+     */
     private void initVue2Sombre() {
 
         panelVue2.setBackground(Color.BLACK);
@@ -745,6 +894,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     }
 
+    /**
+     * Ajoute les statistiques correspondantes à la vue 3 une fois une partie
+     * terminée.
+     */
     private void mettreStatsVue3() {
         
         champPartiesJoueesNiv1.setText(partiesNiv1[JOUEES]);
@@ -760,6 +913,11 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         champScoreMoyenNiv3.setText(partiesNiv3[SCORE_MY]);
     }
     
+    /**
+     * Initialisation d'une partie du jeu du pendue de la vue 2 avec la 
+     * difficulte selectionnee, un nouveau mot caché correspondant à cette 
+     * difficulte et un score réinitialisé.
+     */
     private void jouer() {
         motTire = Mots.tirerUnMot((Integer) listeDifficulte.getSelectedItem());
         motCache.setText(tiretsCacherMot(motTire));
@@ -768,6 +926,14 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         pendu.setText(PENDU_ZERO_ERREUR);
     }
 
+    /**
+     * Affiche un nombre de tirets dans la vue 2 correspondants au nombre de 
+     * caractères du mot tire.
+     * 
+     * @param motTire le mot tiré du fichier contenant les mots cachés.
+     * @return le nombre de tirets correspondant au nombre de caractères du mot 
+     *         tire.
+     */
     private String tiretsCacherMot(String motTire) {
         String tirets = "";
 
@@ -777,12 +943,35 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         return tirets;
     }
 
+    /**
+     * 
+     */
     private void resultatPartie() {
         boolean finPartie = resultatLettre(lettre.getText(), motTire);
 
         if (finPartie) {
             statsNivJeu((Integer) listeDifficulte.getSelectedItem());
             afficherBoiteDialogConfirm();
+        }
+    }
+    
+    private void statsNivJeu(int nivJeu) {
+        
+        switch(nivJeu) {
+            case 1:
+                compteurNiv1 = compteurNivJeu(compteurNiv1, score);
+                partiesNiv1 = partiesNivJeu(partiesNiv1, compteurNiv1);
+                break;
+            case 2:
+                compteurNiv2 = compteurNivJeu(compteurNiv2, score);
+                partiesNiv2 = partiesNivJeu(partiesNiv2, compteurNiv2);
+                break;
+            case 3:
+                compteurNiv3 = compteurNivJeu(compteurNiv3, score);
+                partiesNiv3 = partiesNivJeu(partiesNiv3, compteurNiv3);
+                break;
+            default:
+                break;
         }
     }
     
@@ -876,26 +1065,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         return partiesNiv;
     }
     
-    private void statsNivJeu(int nivJeu) {
-        
-        switch(nivJeu) {
-            case 1:
-                compteurNiv1 = compteurNivJeu(compteurNiv1, score);
-                partiesNiv1 = partiesNivJeu(partiesNiv1, compteurNiv1);
-                break;
-            case 2:
-                compteurNiv2 = compteurNivJeu(compteurNiv2, score);
-                partiesNiv2 = partiesNivJeu(partiesNiv2, compteurNiv2);
-                break;
-            case 3:
-                compteurNiv3 = compteurNivJeu(compteurNiv3, score);
-                partiesNiv3 = partiesNivJeu(partiesNiv3, compteurNiv3);
-                break;
-            default:
-                break;
-        }
-    }
-    
     /**
      * Exécutée lorsque l'utilisateur ferme la fenetre.
      *
@@ -908,6 +1077,11 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         ecrireFichier();
     }
 
+    /**
+     * 
+     * 
+     * @param score le score obtenu suite à la validation d'une lettre.
+     */
     private void ajusterPendu(int score) {
         if (score == 5) {
             pendu.setVisible(false);
@@ -1010,14 +1184,6 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         
         //Démarre l'application
         new JeuPendu();
-
-//        System.out.println("\n"+PENDU_ZERO_ERREUR);
-//        System.out.println("\n"+PENDU_UNE_ERREUR);
-//        System.out.println("\n"+PENDU_DEUX_ERREURS);
-//        System.out.println("\n"+PENDU_TROIS_ERREURS);
-//        System.out.println("\n"+PENDU_QUATRE_ERREURS);
-//        System.out.println("\n"+PENDU_CINQ_ERREURS);
-//        System.out.println("\n"+PENDU_SIX_ERREURS);
 
     }
     
