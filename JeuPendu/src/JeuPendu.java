@@ -23,6 +23,7 @@ import javax.swing.*;
 public class JeuPendu extends WindowAdapter implements ActionListener {
 
     //CONSTANTES
+    ////////////
     public static final String ALPHABET
             = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final Integer[] TAB_DIFFICULTE = new Integer[]{1, 2, 3};
@@ -122,9 +123,9 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     //Constantes pour le fichier des statistiques
     public static final String NIV = "Niveau ";
-    
     public static final String FIC_STATS = "statistiques.txt";
     public static final DecimalFormat DEC_FORMAT = new DecimalFormat("0.0");
+    
     public static final String TIRET_BAS_ESP = "_ ";
     
     //Entiers pour les indices des tableau compteurNiv1,2,3 et partiesNiv1,2,3
@@ -133,14 +134,27 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     public static final int PARTIES_GAG = 1;
     public static final int SCORE_TOT = 2;
     public static final int SCORE_MY = SCORE_TOT;
+    
+    //Chaines pour les JOptionPane
+    public static final String MSG_UNE_LETTRE = "Vous devez entrer une lettre"
+            +" non accentuée !";
+    public static final String MSG_LETTRE_DEJA = "Cette lettre est déjà"
+                    + " décourverte !";
+    public static final String MSG_GAGNE = "BRAVO ! Vous avez gagné la partie.";
+    public static final String MSG_PERDU = "Oups! Vous êtes mort.";
+    public static final String MOT_CACHE = "\n  Mot caché  :";
+    public static final String VOTRE_SCORE = "\n  Votre score : ";
+    public static final String AUTRE_JEU = "\n\nVoulez-vous jouer une "
+            + "autre partie ?";
+    public static final String TITRE_GAGNE = "PARTIE GAGNÉE";
+    public static final String TITRE_PERDU = "PARTIE PERDUE";
 
     //VARIABLES D'INSTANCE
     //////////////////////
-    private int score = 6; 
+    private int score = 0; 
     private int choixCouleurInterface = 0;
     private int choixNiveauDifficulte = 0;
     private String motTire = "";//contiendra le mot tire pour chaques partie 
-    private int scoreGobal = 0;//cumul les scores de chaque partie
     private int perdu;
     private int gagne;
 
@@ -774,12 +788,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
             initVue2Sombre();
         } else if (evenement.getSource() == boutonSoumettre 
                 || evenement.getSource() == lettre) {
-
             analyseLettreEntree();
-
-        } else if (Integer.parseInt(affichageScore.getText()) == 0) {
-            JOptionPane.showMessageDialog(panelVue2, "Bravo! Vous avez gagné "
-                    + "la partie!", "PARTIE GAGNÉE", JOptionPane.PLAIN_MESSAGE);
         }
 
     }
@@ -795,14 +804,13 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      */
     private void analyseLettreEntree() throws HeadlessException {
         if (lettre.getText().length() != 1 || !ALPHABET.contains(lettre.getText())) {
-            JOptionPane.showMessageDialog(panelVue2, "Vous devez entrer une "
-                    +"lettre non accentuée!", "ERREUR",
-                    JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(panelVue2, MSG_UNE_LETTRE, "ERREUR",
+                    JOptionPane.ERROR_MESSAGE);
             lettre.requestFocusInWindow();
         } else if (motCache.getText().contains(lettre.getText()
                 .toUpperCase())) {
-            JOptionPane.showMessageDialog(fenetre, "Cette lettre est déjà"
-                    + " décourverte", "Message", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(fenetre, MSG_LETTRE_DEJA, "Message",
+                    JOptionPane.PLAIN_MESSAGE);
             lettre.requestFocusInWindow();
         } else {
             resultatPartie();
@@ -1000,7 +1008,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
 
     /**
      * Gère la validation d'une lettre si celle-ci n'avait pas déjà été entrée 
-     * et vérifie si toutes les lettres ont été découvertes.
+     * et vérifie si toutes les lettres ont été découvertes, gère la fin de la
+     * partie.
      */
     private void resultatPartie() {
         boolean finPartie = resultatLettre(lettre.getText(), motTire);
@@ -1092,14 +1101,12 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
      * cours.
      */
     private void afficherBoiteDialogConfirm() {
-        //Toutes les lettres du mot sont découvertes l'utilisateur gagne
+        //Toutes les lettres du mot sont découvertes, l'utilisateur gagne
         if (!motCache.getText().contains(TIRET_BAS_ESP)) {
-            gagne = JOptionPane.showConfirmDialog(fenetre, "BRAVO ! Vous avez "
-                    + "gagné la partie.\n  Mot caché  :" + motTire
-                            .toUpperCase() + "\n  Votre score : " + score + "\n"
-                    + "\nVoulez-vous jouer une autre partie ?",
-                    "PARTIE GAGNÉE", JOptionPane.YES_NO_OPTION,
-                    JOptionPane.PLAIN_MESSAGE);
+            gagne = JOptionPane.showConfirmDialog(fenetre, MSG_GAGNE + MOT_CACHE
+                    + motTire.toUpperCase() + VOTRE_SCORE + score + AUTRE_JEU,
+                    TITRE_GAGNE, JOptionPane.YES_NO_OPTION, JOptionPane
+                    .PLAIN_MESSAGE);
 
             if (gagne == JOptionPane.YES_OPTION) {
                 lettre.requestFocusInWindow();
@@ -1111,12 +1118,9 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         
         //Le score est arrivé à zéro et l'utilisateur perd
         if (score == 0) {
-            perdu = JOptionPane.showConfirmDialog(fenetre,
-                    "Oups! Vous êtes mort.\n  "
-                    + "Mot caché  :" + motTire.toUpperCase() + "\n\n"
-                    + "Voulez-vous jouer une autre partie ?", "PARTIE "
-                    + "PERDUE", JOptionPane.YES_NO_OPTION,
-                    JOptionPane.PLAIN_MESSAGE);
+            perdu = JOptionPane.showConfirmDialog(fenetre, MSG_PERDU + MOT_CACHE
+                     + motTire.toUpperCase() + AUTRE_JEU, TITRE_PERDU, 
+                    JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (perdu == JOptionPane.YES_OPTION) {
                 lettre.requestFocusInWindow();
@@ -1138,7 +1142,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     private int[] compteurNivJeu(int[] compteurNiv, int scorePartie) {
         if (compteurNiv != null && compteurNiv.length == 3 && scorePartie >= 0) {
             compteurNiv[PARTIES]++;
-            if (scorePartie >0) {
+            if (scorePartie > 0) {
                 compteurNiv[PARTIES_GAG]++;
                 compteurNiv[SCORE_TOT] += scorePartie;
             }
@@ -1147,19 +1151,21 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
     /**
      * Effectue les manipulations mathématiques afin de généré les statistiques 
-     * finales provenant du tableau de statistiques brutes.
+     * finales provenant du tableau de statistiques brutes à la fin de chaque 
+     * partie pour un niveau donné.
      * @param partiesNiv le tableau qui contiendra les statistiques finales sous
      *                   la forme de chaines de caractères
-     * @param compteurNiv le tableau contenant les statistiques brutes.
+     * @param compteurNiv le tableau contenant les statistiques brutes sous 
+     *                     forme de nombres entiers.
      * @return le tableau de statistiques finales mis à jour.
      */
     private static String[] partiesNivJeu(String[] partiesNiv, int[] compteurNiv) {
-        partiesNiv[JOUEES] ="" + compteurNiv[PARTIES];
+        partiesNiv[JOUEES] = "" + compteurNiv[PARTIES];
         if (compteurNiv[PARTIES] > 0) {
             partiesNiv[PARTIES_GAG] = DEC_FORMAT.format(100.0 * compteurNiv
                    [PARTIES_GAG] / compteurNiv[PARTIES]) + "%";
             partiesNiv[SCORE_MY] = DEC_FORMAT.format(compteurNiv[SCORE_TOT] 
-                    / compteurNiv[PARTIES]);
+                    / compteurNiv[PARTIES])  + " / 6";
         }
         return partiesNiv;
     }
@@ -1177,7 +1183,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
     }
 
     /**
-     * Ajuste l'affichage du pendu en focntion du score de la partie en cours.
+     * Ajuste l'affichage du pendu en fonction du score de la partie en cours.
      * 
      * @param score le score obtenu suite à la validation d'une lettre.
      */
@@ -1275,7 +1281,7 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
              }
                         
             switch(niv) {
-                case 1: partiesNiv1 = ligne.split(" : ");;
+                case 1: partiesNiv1 = ligne.split(" : ");
                     break;
                 case 2: partiesNiv2 = ligne.split(" : ");
                     break;
@@ -1292,6 +1298,10 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         }
     }
     
+    /**
+     * Application JeuPendu
+     * @param params
+     */
     public static void main(String[] params) {
         //Lecture du fichier des statistiques s'il existe
         lireFichier(FIC_STATS);
