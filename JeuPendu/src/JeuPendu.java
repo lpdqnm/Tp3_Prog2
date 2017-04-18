@@ -1164,8 +1164,8 @@ public class JeuPendu extends WindowAdapter implements ActionListener {
         if (compteurNiv[PARTIES] > 0) {
             partiesNiv[PARTIES_GAG] = DEC_FORMAT.format(100.0 * compteurNiv
                    [PARTIES_GAG] / compteurNiv[PARTIES]) + "%";
-            partiesNiv[SCORE_MY] = DEC_FORMAT.format(compteurNiv[SCORE_TOT] 
-                    / compteurNiv[PARTIES])  + " / 6";
+            partiesNiv[SCORE_MY] = DEC_FORMAT.format((compteurNiv[SCORE_TOT] 
+                    + 0.0) / compteurNiv[PARTIES])  + " / 6";
         }
         return partiesNiv;
     }
